@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dokumentasi Interaktif</title>
+  <link rel="stylesheet" href="/public/css/style.css" />
+</head>
+
+<body>
+  <div id="header"></div>
+  <!-- CHILD HEADER WRAPPER -->
+  <div class="child-header-wrapper">
+    <button class="scroll-btn left" id="scroll-child-left">◀</button>
+
+    <div class="child-header" id="child-header">
+      <div class="child-header-container" id="child-header-container">
+        <!-- Tombol kategori diisi JS -->
+      </div>
+    </div>
+
+    <button class="scroll-btn right" id="scroll-child-right">▶</button>
+  </div>
+
+  <!-- MAIN NAVBAR WRAPPER -->
+  <div class="navbar-scroll-wrapper">
+    <button class="scroll-btn left" id="scroll-navbar-left">◀</button>
+
+    <nav id="main-navbar" class="main-navbar">
+      <!-- Item navbar akan diisi JS -->
+    </nav>
+
+    <button class="scroll-btn right" id="scroll-navbar-right">▶</button>
+  </div>
+  <!-- PROGRESS BAR -->
+  <div id="page-progress-bar"></div>
+  <div class="layout">
+    <!-- Sidebar Kiri -->
+    <aside class="sidebar-left">
+      <div class="search-wrapper">
+        <input type="text" id="sidebar-search" placeholder="Cari menu..." class="sidebar-search" />
+        <span id="search-count">0</span>
+      </div>
+      <div id="sidebar"></div>
+    </aside>
+
+    <!-- Konten Utama -->
+    <main class="main-content">
+      <h1>Belajar CSS</h1>
+      <h2>Apa Itu CSS?</h2>
+      <p>CSS (Cascading Style Sheets) adalah bahasa yang digunakan untuk mengatur tampilan dan gaya elemen dalam dokumen
+        HTML, seperti warna, ukuran, margin, dan layout.</p>
+
+      <h2>Manfaat Menggunakan CSS</h2>
+      <p>CSS memisahkan konten dari tampilan, sehingga memudahkan pengelolaan dan konsistensi desain antar halaman
+        website.</p>
+
+      <h2>Jenis-Jenis CSS</h2>
+      <p>Ada tiga jenis CSS: inline (langsung di elemen), internal (dalam tag &lt;style&gt; di HTML), dan eksternal
+        (file .css terpisah).</p>
+
+      <h2>Struktur Penulisan CSS</h2>
+      <p>Struktur dasar CSS terdiri dari selector, property, dan value. Contoh: <code>p { color: blue; }</code> akan
+        mewarnai teks paragraf menjadi biru.</p>
+
+      <h2>Selector di CSS</h2>
+      <p>Selector digunakan untuk memilih elemen HTML yang akan diberi gaya, misalnya menggunakan nama tag, class, ID,
+        atau kombinasi.</p>
+
+      <h2>Properti Umum di CSS</h2>
+      <p>Beberapa properti CSS yang sering digunakan meliputi <code>color</code>, <code>font-size</code>,
+        <code>margin</code>, <code>padding</code>, dan <code>background</code>.</p>
+
+      <h2>Class dan ID dalam CSS</h2>
+      <p>Class digunakan untuk memberi gaya pada banyak elemen, sedangkan ID ditujukan untuk satu elemen unik. Penulisan
+        class diawali titik (.) dan ID diawali tanda pagar (#).</p>
+
+      <h2>Responsive Design dengan CSS</h2>
+      <p>CSS memungkinkan website menjadi responsif menggunakan media queries, sehingga tampilan dapat menyesuaikan
+        berbagai ukuran layar.</p>
+
+      <h2>Penggunaan Framework CSS</h2>
+      <p>Framework seperti Bootstrap dan Tailwind CSS membantu mempercepat proses styling dengan menyediakan kelas-kelas
+        siap pakai.</p>
+
+      <h2>Tips Belajar CSS</h2>
+      <p>Mulailah dari konsep dasar, praktik langsung membuat halaman web, dan eksplorasi dokumentasi seperti MDN atau
+        W3Schools.</p>
+
+
+
+    </main>
+
+    <!-- Sidebar Kanan -->
+    <aside id="scrollspy" class="sidebar-right"></aside>
+  </div>
+  <button id="backToTop" class="back-to-top">↑ Kembali ke Atas</button>
+  <div id="footer"></div>
+  <script type="module" src="/public/js/main.js"></script>
+  
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+[
+  { "label": "Apa Itu CSS", "file": "/docs/programming/css/" },
+  { "label": "Pendahuluan CSS", "file": "pendahuluan-css.html" },
+  { "label": "Pengenalan CSS", "file": "pengenalan-css.html" },
+  { "label": "Sintaksis CSS", "file": "sintaksis-css.html" },
+
+  {
+    "label": "Cara Menyisipkan CSS",
+    "children": [
+      { "label": "Inline Style", "file": "inline-style.html" },
+      { "label": "Internal Style", "file": "internal-style.html" }
+    ]
+  },
+  { "label": "CSS Inline", "file": "css-inline.html" },
+  { "label": "CSS Internal", "file": "css-internal.html" },
+  { "label": "CSS Eksternal", "file": "css-eksternal.html" },
+  { "label": "Selektor Dasar", "file": "selektor-dasar.html" },
+  {
+    "label": "Selektor Gabungan",
+    "children": [
+      { "label": "Kombinasi ID dan Class", "file": "kombinasi-id-class.html" },
+      { "label": "Selektor Bersarang", "file": "selektor-bersarang.html" }
+    ]
+  },
+  { "label": "Selektor Atribut", "file": "selektor-atribut.html" },
+  { "label": "Selektor Pseudo-class", "file": "pseudo-class.html" },
+  { "label": "Selektor Pseudo-element", "file": "pseudo-element.html" },
+  { "label": "Unit Ukuran CSS", "file": "unit-ukuran.html" },
+  {
+    "label": "Warna di CSS",
+    "children": [
+      { "label": "RGB & HEX", "file": "rgb-hex.html" },
+      { "label": "HSL & Opacity", "file": "hsl-opacity.html" }
+    ]
+  },
+  { "label": "Background CSS", "file": "background-css.html" },
+  { "label": "Border dan Outline", "file": "border-outline.html" },
+  { "label": "Text Styling", "file": "text-styling.html" },
+  { "label": "Font dan Tipografi", "file": "font-tipografi.html" },
+  {
+    "label": "Box Model",
+    "children": [
+      { "label": "Pendahuluan CSS", "file": "pendahuluan-css.html" },
+      { "label": "Margin", "file": "margin.html" }
+    ]
+  },
+  { "label": "Margin dan Padding", "file": "margin-padding.html" },
+  { "label": "Positioning Element", "file": "positioning.html" },
+  { "label": "Display dan Visibility", "file": "display-visibility.html" },
+  { "label": "Float dan Clear", "file": "float-clear.html" },
+  {
+    "label": "Flexbox Dasar",
+
+    "children": [
+      { "label": "Justify Content", "file": "justify-content.html" },
+      { "label": "Align Items", "file": "align-items.html" }
+    ]
+  },
+  { "label": "Flexbox Lanjutan", "file": "flexbox-lanjutan.html" },
+  { "label": "Grid Layout", "file": "grid-layout.html" },
+  { "label": "Responsif dengan Media Query", "file": "media-query.html" },
+  { "label": "Transisi CSS", "file": "transisi-css.html" },
+  {
+    "label": "Animasi CSS",
+    "children": [
+      { "label": "Keyframes", "file": "keyframes.html" },
+      { "label": "Animation Delay", "file": "animation-delay.html" }
+    ]
+  },
+  { "label": "Transformasi 2D", "file": "transformasi-2d.html" },
+  { "label": "Transformasi 3D", "file": "transformasi-3d.html" },
+  { "label": "Z-index dan Layering", "file": "z-index.html" },
+  { "label": "Pseudo Class Hover", "file": "hover.html" },
+  {
+    "label": "Form Styling",
+    "children": [
+      { "label": "Input Field", "file": "input-field.html" },
+      { "label": "Checkbox Styling", "file": "checkbox-styling.html" }
+    ]
+  },
+  { "label": "Button Styling", "file": "button-styling.html" },
+  { "label": "List dan Table CSS", "file": "list-table.html" },
+  { "label": "Icon dengan CSS", "file": "icon-css.html" },
+  { "label": "Framework CSS", "file": "framework-css.html" },
+  {
+    "label": "Bootstrap vs Tailwind",
+    "children": [
+      { "label": "Bootstrap Grid", "file": "bootstrap-grid.html" },
+      { "label": "Tailwind Utility", "file": "tailwind-utility.html" }
+    ]
+  },
+  { "label": "Dark Mode CSS", "file": "dark-mode.html" },
+  { "label": "Print CSS", "file": "print-css.html" },
+  { "label": "Best Practice CSS", "file": "best-practice.html" },
+  { "label": "CSS Utility Class", "file": "utility-class.html" },
+  {
+    "label": "Reset dan Normalize",
+    "children": [
+      { "label": "CSS Reset", "file": "css-reset.html" },
+      { "label": "Normalize.css", "file": "normalize-css.html" }
+    ]
+  },
+  { "label": "CSS untuk Mobile", "file": "css-mobile.html" },
+  { "label": "Menggunakan Custom Property", "file": "custom-property.html" },
+  { "label": "BEM Methodology", "file": "bem.html" },
+  { "label": "SCSS dan Sass", "file": "scss-sass.html" },
+  { "label": "CSS Performance", "file": "css-performance.html" },
+  { "label": "Menghindari Konflik CSS", "file": "konflik-css.html" }
+]
