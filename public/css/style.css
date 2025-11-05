@@ -76,3 +76,10 @@ footer {
     flex-direction: column;
   }
 }
+/* cegah agar tombol windows.print() tidak ikut di export pdf */
+@media print {
+  .no-print, button {
+    display: none !important;
+  }
+}
+
