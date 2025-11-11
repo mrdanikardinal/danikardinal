@@ -119,9 +119,7 @@ header {
 }
 /* End accordion */
 /*  this is button line for skill */
-.container-skills{
- 
-}
+
 
 .skills {
   background-color: #ddd;
@@ -129,7 +127,7 @@ header {
   color: black;
   padding: 5px 20px;
   text-align: center;
-  text-decoration: none;
+  text-decoration: none;  
   display: inline-block;
   cursor: pointer;
   border-radius: 16px;
@@ -137,8 +135,36 @@ header {
 
 .html {width: 90%; background-color: #04AA6D;}
 .css {width: 80%; background-color: #2196F3;}
-.js {width: 65%; background-color: #f44336;}
-.php {width: 60%; background-color: #808080;}
+/* color programming */
+.js {width: 65%; background-color: #e8f40d;}
+.java {width: 85%; background-color: #f4240d;}
+.python {width: 80%; background-color: #2196F3;}
+.php {width: 85%; background-color: #0f8ebc;}
+.sdlc {width: 95%; background-color: #1df212;}
+/* end color programming */
+/* color data structures and algorithms */
+.linked_list {width: 50%; background-color: #e8f40d;}
+.stacks {width: 50%; background-color: #f4240d;}
+.queues {width: 50%; background-color: #2196F3;}
+.trees {width: 50%; background-color: #310fbc;}
+.graphs {width: 50%; background-color: #310fbc;} 
+/* end color data structures and algorithms */
+/* color frameworks and libraries */
+.springboot {width: 50%; background-color: #e8f40d;}
+.react {width: 50%; background-color: #f4240d;}
+.angular {width: 50%; background-color: #2196F3;}
+.django {width: 50%; background-color: #310fbc;}
+.nodejs {width: 50%; background-color: #310fbc;}
+.vuejs {width: 50%; background-color: #2196F3;}
+
+/* color databases SQL and noSQL */
+.mysql {width: 50%; background-color: #e8f40d;}
+.postgresql {width: 50%; background-color: #f4240d;}
+.mongodb {width: 50%; background-color: #2196F3;}
+.cassandra {width: 50%; background-color: #310fbc;}
+.redis {width: 50%; background-color: #310fbc;}
+
+/* end color  databases SQL and noSQL */
 
 /* End this is button line for skill */
 
