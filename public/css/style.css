@@ -79,6 +79,7 @@ header {
   outline: none;
   font-size: 15px;
   transition: 0.4s;
+  border-radius: 16px 16px 0px 0px ;
 }
 .accordion:after {
   content: '\02795'; /* Unicode character for "plus" sign (+) */
@@ -99,10 +100,12 @@ header {
 .panel {
   padding: 20px;
   display: none;
-  background-color: white;
+  background-image: linear-gradient(to left, rgb(236, 186, 243), rgb(109, 10, 65));
+  
   overflow: hidden;
-  margin-top: 5px;
   margin-bottom: 15px;
+  box-shadow: 10px 10px 5px rgb(164, 172, 173);
+  border-radius: 0px 0px 16px 16px;
  
 }
 .accordion-programming {
@@ -121,10 +124,14 @@ header {
 .active, .accordion-programming:hover {
   background-color: #ccc; 
 }
+
 .accordion-programming {
   /* Pastikan elemen ini punya lebar penuh */
   display: block; 
   width: 100%;
+  margin-top: 5px;
+  border-radius: 16px 16px 0px 0px ;
+
 }
 
 /* IKON KIRI - Float ke Kiri */
@@ -144,13 +151,20 @@ header {
   margin-left: 5px;
   padding-top: 2px; /* Tweak manual posisi vertikal */
 }
+/* IKON KANAN - Saat Active, ubah menjadi Minus */
+.accordion-programming.active::after {
+  content: '\2796'; /* ➖ Minus (atau '\2212' untuk tanda kurang sederhana) */
+}
 .panel-programming {
   padding: 20px;
   display: none;
-  background-color: white;
+  background-image: linear-gradient(to right, rgb(167, 235, 161), rgb(195, 234, 250));
+
   overflow: hidden;
-  margin-top: 5px;
   margin-bottom: 15px;
+  box-shadow: 10px 10px 5px rgb(164, 172, 173);
+  border-radius: 0px 0px 16px 16px;
+
  
 }
 /* End accordion */
