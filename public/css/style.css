@@ -77,6 +77,17 @@ header {
   font-size: 15px;
   transition: 0.4s;
 }
+.accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
 
 .active, .accordion:hover {
   background-color: #ccc; 
