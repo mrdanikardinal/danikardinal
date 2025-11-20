@@ -55,6 +55,9 @@ header {
 .container-img:hover .middle {
   opacity: 1;
 }
+/* start container-skills */
+
+/* end container-skills */
 
 .text {
   background-color: #04AA6D;
@@ -118,7 +121,29 @@ header {
 .active, .accordion-programming:hover {
   background-color: #ccc; 
 }
+.accordion-programming {
+  /* Pastikan elemen ini punya lebar penuh */
+  display: block; 
+  width: 100%;
+}
 
+/* IKON KIRI - Float ke Kiri */
+.accordion-programming::before {
+  content: '\1F4C1'; /* 📁 Folder */
+  float: left;      /* Kunci ke sisi Kiri */
+  margin-right: 10px;
+  padding-top: 2px; /* Kadang perlu tweak manual agar sejajar teks */
+}
+
+/* IKON KANAN - Float ke Kanan */
+.accordion-programming::after {
+  content: '\02795'; /* ➕ Plus */
+  float: right;      /* Kunci ke sisi Kanan */
+  color: #777;
+  font-size: 13px;
+  margin-left: 5px;
+  padding-top: 2px; /* Tweak manual posisi vertikal */
+}
 .panel-programming {
   padding: 20px;
   display: none;
