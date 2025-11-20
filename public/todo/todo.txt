@@ -1,0 +1,16 @@
+1.website landingpage personal branding
+2.tampilan website dibagi 2 komlom dan baris optional
+3.website dibuat responsive
+4.kembangkan fitur hanya dengan html,javascript,css native
+5.kolom pertama personal informasi
+  *)buat container card
+  *)buat accordion effect
+  *)buat progress bar for skill
+6.kolom kedua proyek 
+  *)buat container card
+  *)buat time line effect
+  *)buat container card
+
+
+  
+7.
