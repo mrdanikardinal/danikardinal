@@ -69,7 +69,7 @@ async function exportPDF() {
       pdf.text(`${pageTitle}`, marginLeft, 10);
 
       pdf.setFontSize(9);
-      const text = "Dokumen ini dirender otomatis dari sumber: ";
+      const text = "This document has been automatically generated from the source: ";
       const textWidth = pdf.getTextWidth(text);
 
       // Tampilkan teks
