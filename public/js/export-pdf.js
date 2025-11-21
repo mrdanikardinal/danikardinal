@@ -7,6 +7,10 @@ async function exportPDF() {
     btn.style.display = "none";
     await new Promise(resolve => setTimeout(resolve, 200));
 
+    // Ambil title dan URL halaman
+    const pageTitle = document.title || "Dokumen Web";
+    const pageURL = window.location.href;
+
     // 2️⃣ Render seluruh halaman ke canvas
     const canvas = await html2canvas(document.body, {
       scale: window.devicePixelRatio || 2,
@@ -20,22 +24,21 @@ async function exportPDF() {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const marginTop = 15;    // Margin atas
+    const marginTop = 25;    // Margin atas untuk header
     const marginBottom = 15; // Margin bawah
-    const marginLeft = 10;   // Margin kiri
-    const marginRight = 10;  // Margin kanan
+    const marginLeft = 10;   
+    const marginRight = 10;  
 
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
     const pdfWidth = pageWidth - marginLeft - marginRight;
     const ratio = pdfWidth / canvasWidth;
-    const pdfHeight = canvasHeight * ratio;
 
-    let position = 0; // Posisi di canvas
-    const pageContentHeight = (pageHeight - marginTop - marginBottom) / ratio; // dalam pixel
+    let position = 0;
+    const pageContentHeight = (pageHeight - marginTop - marginBottom) / ratio; // pixel per page
 
     let pageNumber = 1;
-    const totalPages = Math.ceil(pdfHeight / (pageHeight - marginTop - marginBottom));
+    const totalPages = Math.ceil((canvasHeight * ratio) / (pageHeight - marginTop - marginBottom));
 
     while (position < canvasHeight) {
       const canvasPageHeight = Math.min(pageContentHeight, canvasHeight - position);
@@ -61,14 +64,26 @@ async function exportPDF() {
       const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
       const imgPageHeight = canvasPageHeight * ratio;
 
-      // Tambahkan header jika mau
+      // HEADER
       pdf.setFontSize(10);
-      pdf.text(`Dokumen Halaman ${pageNumber}`, marginLeft, 10);
+      pdf.text(`${pageTitle}`, marginLeft, 10);
 
-      // Tambahkan gambar
+      pdf.setFontSize(9);
+      const text = "Dokumen ini dirender otomatis dari sumber: ";
+      const textWidth = pdf.getTextWidth(text);
+
+      // Tampilkan teks
+      pdf.text(text, marginLeft, 20);
+
+      // Tambahkan link klikable
+      pdf.setTextColor(0, 0, 255); // biru seperti hyperlink
+      pdf.textWithLink(pageURL, marginLeft + textWidth, 20, { url: pageURL });
+      pdf.setTextColor(0, 0, 0); // kembalikan warna normal
+
+      // GAMBAR konten
       pdf.addImage(imgData, 'JPEG', marginLeft, marginTop, pdfWidth, imgPageHeight);
 
-      // Tambahkan footer jika mau
+      // FOOTER: halaman
       pdf.setFontSize(10);
       pdf.text(`Halaman ${pageNumber} dari ${totalPages}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
 
