@@ -1,28 +1,15 @@
-var acc = document.getElementsByClassName("accordion");
-var i;
+function setupAccordion(selector, panelClass) {
+  const accordions = document.querySelectorAll(selector);
 
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
+  accordions.forEach((accordion) => {
+    accordion.addEventListener("click", () => {
+      accordion.classList.toggle("active"); // ikon plus/minus
+      const panel = accordion.nextElementSibling;
+      panel.classList.toggle(panelClass); // toggle panel sesuai class
+    });
   });
 }
-var accProgramming = document.getElementsByClassName("accordion-programming");
-var iProg;
 
-for (iProg = 0; iProg < accProgramming.length; iProg++) {
-  accProgramming[iProg].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
-  });
-}
+// Gunakan fungsi untuk berbagai accordion
+setupAccordion(".accordion", "show");
+setupAccordion(".accordion-programming", "show-programming");
