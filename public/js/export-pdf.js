@@ -85,7 +85,7 @@ async function exportPDF() {
 
       // FOOTER: halaman
       pdf.setFontSize(10);
-      pdf.text(`Halaman ${pageNumber} dari ${totalPages}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
+      pdf.text(`Document ${pageNumber} of ${totalPages}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
 
       position += canvasPageHeight;
       if (position < canvasHeight) pdf.addPage();
