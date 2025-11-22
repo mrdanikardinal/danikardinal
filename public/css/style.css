@@ -1,4 +1,8 @@
 
+:root {
+  --primary-bg-color: rgb(16, 6, 61);
+  --primary-color: #ffffff;
+}
 * {
   box-sizing: border-box;
 }
@@ -8,13 +12,21 @@ body {
   margin: 0;
 }
 
+.note {
+  background-color: var(--primary-bg-color) ;
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
+
 /* Header */
 header {
   padding: 60px;
   text-align: center;
-  background: #1abc9c;
+  background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
   color: white;
 }
+
 /* this is button line for profil photo */
 .container-img {
   display: block;
@@ -32,7 +44,7 @@ header {
   height: auto;
   transition: .5s ease;
   backface-visibility: hidden;
- 
+
 }
 
 .middle {
@@ -55,6 +67,7 @@ header {
 .container-img:hover .middle {
   opacity: 1;
 }
+
 /* start container-skills */
 
 /* end container-skills */
@@ -78,12 +91,14 @@ header {
   text-align: left;
   outline: none;
   font-size: 15px;
+  font-weight: bold;
   transition: 0.3s;
-  border-radius: 16px 16px 0px 0px ;
+  border-radius: 16px 16px 0px 0px;
 }
 
 .accordion:after {
-  content: '\02795'; /* plus */
+  content: '\02795';
+  /* plus */
   font-size: 13px;
   color: #777;
   float: right;
@@ -91,15 +106,19 @@ header {
 }
 
 .active:after {
-  content: "\2796"; /* minus */
+  content: "\2796";
+  /* minus */
 }
 
-.active, .accordion:hover {
-  background-color: #ccc; 
+.active,
+.accordion:hover {
+ background-color: var(--primary-bg-color);
+ color: var(--primary-color);
+ font-size: large;
+ font-weight: bold;
 }
-
 .panel {
-  background-image: linear-gradient(to left, rgb(236, 186, 243), rgb(109, 10, 65));
+  background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
   overflow: hidden;
   margin-bottom: 15px;
   box-shadow: 10px 10px 5px rgb(164, 172, 173);
@@ -108,11 +127,13 @@ header {
   /* --- Transition Smooth --- */
   max-height: 0;
   transition: max-height 0.3s ease;
-  padding: 0 20px; /* padding atas-bawah dihilangkan dulu */
+  padding: 0 20px;
+  /* padding atas-bawah dihilangkan dulu */
 }
 
 .panel.show {
-  max-height: 2220px; /* besar nilai cukup besar agar muat konten */
+  max-height: 2220px;
+  /* besar nilai cukup besar agar muat konten */
   padding: 20px;
 }
 
@@ -123,54 +144,66 @@ header {
   padding: 18px;
   width: 100%;
   border: none;
-  display: block; 
+  display: block;
   margin-top: 5px;
-  border-radius: 16px 16px 0px 0px ;
+  border-radius: 16px 16px 0px 0px;
   text-align: left;
   outline: none;
   font-size: 15px;
   transition: 0.4s;
 }
 
-.active, .accordion-programming:hover {
-  background-color: #ccc; 
+.active
+.accordion-programming:hover {
+  background-color: #ccc;
 }
 
 
 /* IKON KIRI - Float ke Kiri */
 .accordion-programming::before {
-  content: '\1F4C1'; /* 📁 Folder */
-  float: left;      /* Kunci ke sisi Kiri */
+  content: '\1F4C1';
+  /* 📁 Folder */
+  float: left;
+  /* Kunci ke sisi Kiri */
   margin-right: 10px;
-  padding-top: 2px; /* Kadang perlu tweak manual agar sejajar teks */
+  padding-top: 2px;
+  /* Kadang perlu tweak manual agar sejajar teks */
 }
 
 /* IKON KANAN - Float ke Kanan */
 .accordion-programming::after {
-  content: '\02795'; /* ➕ Plus */
-  float: right;      /* Kunci ke sisi Kanan */
+  content: '\02795';
+  /* ➕ Plus */
+  float: right;
+  /* Kunci ke sisi Kanan */
   color: #777;
   font-size: 13px;
   margin-left: 5px;
-  padding-top: 2px; /* Tweak manual posisi vertikal */
+  padding-top: 2px;
+  /* Tweak manual posisi vertikal */
 }
+
 /* IKON KANAN - Saat Active, ubah menjadi Minus */
 .accordion-programming.active::after {
-  content: '\2796'; /* ➖ Minus (atau '\2212' untuk tanda kurang sederhana) */
+  content: '\2796';
+  /* ➖ Minus (atau '\2212' untuk tanda kurang sederhana) */
 }
+
 .panel-programming {
   background-image: linear-gradient(to right, rgb(167, 235, 161), rgb(195, 234, 250));
   overflow: hidden;
   margin-bottom: 15px;
   box-shadow: 10px 10px 5px rgb(164, 172, 173);
   border-radius: 0px 0px 16px 16px;
-   /* --- Transition Smooth --- */
+  /* --- Transition Smooth --- */
   max-height: 0;
   transition: max-height 0.3s ease;
- 
+
 }
+
 .panel-programming.show-programming {
-  max-height: 1000px; /* cukup besar untuk menampung konten */
+  max-height: 1000px;
+  /* cukup besar untuk menampung konten */
   padding: 20px;
 }
 
@@ -184,42 +217,132 @@ header {
   color: black;
   padding: 5px 20px;
   text-align: center;
-  text-decoration: none;  
+  text-decoration: none;
   display: inline-block;
   cursor: pointer;
   border-radius: 16px;
 }
 
-.html {width: 90%; background-color: #04AA6D;}
-.css {width: 80%; background-color: #2196F3;}
+.html {
+  width: 90%;
+  background-color: #04AA6D;
+}
+
+.css {
+  width: 80%;
+  background-color: #2196F3;
+}
+
 /* color programming */
-.js {width: 65%; background-color: #e8f40d;}
-.java {width: 85%; background-color: #f4240d;}
-.python {width: 80%; background-color: #2196F3;}
-.php {width: 85%; background-color: #0f8ebc;}
-.sdlc {width: 95%; background-color: #1df212;}
+.js {
+  width: 65%;
+  background-color: #e8f40d;
+}
+
+.java {
+  width: 85%;
+  background-color: #f4240d;
+}
+
+.python {
+  width: 80%;
+  background-color: #2196F3;
+}
+
+.php {
+  width: 85%;
+  background-color: #0f8ebc;
+}
+
+.sdlc {
+  width: 95%;
+  background-color: #1df212;
+}
+
 /* end color programming */
 /* color data structures and algorithms */
-.linked_list {width: 50%; background-color: #e8f40d;}
-.stacks {width: 50%; background-color: #f4240d;}
-.queues {width: 50%; background-color: #2196F3;}
-.trees {width: 50%; background-color: #310fbc;}
-.graphs {width: 50%; background-color: #310fbc;} 
+.linked_list {
+  width: 50%;
+  background-color: #e8f40d;
+}
+
+.stacks {
+  width: 50%;
+  background-color: #f4240d;
+}
+
+.queues {
+  width: 50%;
+  background-color: #2196F3;
+}
+
+.trees {
+  width: 50%;
+  background-color: #310fbc;
+}
+
+.graphs {
+  width: 50%;
+  background-color: #310fbc;
+}
+
 /* end color data structures and algorithms */
 /* color frameworks and libraries */
-.springboot {width: 50%; background-color: #e8f40d;}
-.react {width: 50%; background-color: #f4240d;}
-.angular {width: 50%; background-color: #2196F3;}
-.django {width: 50%; background-color: #310fbc;}
-.nodejs {width: 50%; background-color: #310fbc;}
-.vuejs {width: 50%; background-color: #2196F3;}
+.springboot {
+  width: 50%;
+  background-color: #e8f40d;
+}
+
+.react {
+  width: 50%;
+  background-color: #f4240d;
+}
+
+.angular {
+  width: 50%;
+  background-color: #2196F3;
+}
+
+.django {
+  width: 50%;
+  background-color: #310fbc;
+}
+
+.nodejs {
+  width: 50%;
+  background-color: #310fbc;
+}
+
+.vuejs {
+  width: 50%;
+  background-color: #2196F3;
+}
 
 /* color databases SQL and noSQL */
-.mysql {width: 50%; background-color: #e8f40d;}
-.postgresql {width: 50%; background-color: #f4240d;}
-.mongodb {width: 50%; background-color: #2196F3;}
-.cassandra {width: 50%; background-color: #310fbc;}
-.redis {width: 50%; background-color: #310fbc;}
+.mysql {
+  width: 50%;
+  background-color: #e8f40d;
+}
+
+.postgresql {
+  width: 50%;
+  background-color: #f4240d;
+}
+
+.mongodb {
+  width: 50%;
+  background-color: #2196F3;
+}
+
+.cassandra {
+  width: 50%;
+  background-color: #310fbc;
+}
+
+.redis {
+  width: 50%;
+  background-color: #310fbc;
+}
 
 /* end color  databases SQL and noSQL */
 
@@ -229,12 +352,13 @@ header {
 /* Top navigation bar */
 .navbar {
   display: flex;
-  background-color: #333;
+  background-color: var(--primary-bg-color) ;
+ 
 }
 
 /* Navigation bar links */
 .navbar a {
-  color: white;
+  color: var(--primary-color);
   padding: 14px 20px;
   text-decoration: none;
   text-align: center;
@@ -242,12 +366,12 @@ header {
 
 /* Change color on hover */
 .navbar a:hover {
-  background-color: #ddd;
+  background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
   color: black;
 }
 
 /* Column container */
-.container {  
+.container {
   display: flex;
   flex-wrap: wrap;
 }
@@ -272,6 +396,7 @@ header {
   width: 100%;
   padding: 20px;
 }
+
 .fakeimgpasphoto {
   display: block;
   margin-left: auto;
@@ -285,19 +410,24 @@ header {
 footer {
   padding: 20px;
   text-align: center;
-  background: #ddd;
+  background-color: var(--primary-bg-color) ;
+  color: var(--primary-color);
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
-  .container, .navbar {   
+
+  .container,
+  .navbar {
     flex-direction: column;
   }
 }
+
 /* cegah agar tombol windows.print() tidak ikut di export pdf */
 @media print {
-  .no-print, button {
+
+  .no-print,
+  button {
     display: none !important;
   }
 }
-
