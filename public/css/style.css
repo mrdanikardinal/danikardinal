@@ -209,21 +209,36 @@ header {
 
 /* End accordion */
 /*  this is button line for skill */
-
-
 .skills {
   width: 0%;
-  transition: width 0.3s;
   background-color: #ddd;
-  border: none;
-  color: black;
-  padding: 5px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
   border-radius: 16px;
+  height: 30px;
+  line-height: 40px;
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
 }
+
+.skill-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  pointer-events: none;
+  color: black;
+}
+
+.skill-logo {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  height: 40px;
+  pointer-events: none;
+}
+
 
 .html {
   width: 90%;
@@ -292,7 +307,7 @@ header {
 /* color frameworks and libraries */
 .springboot {
   width: 50%;
-  background-color: #e8f40d;
+  background-color:green;
 }
 
 .react {
