@@ -1,3 +1,6 @@
+
+
+document.addEventListener("DOMContentLoaded", () => {
 function setupAccordion(selector, panelClass) {
   const accordions = document.querySelectorAll(selector);
 
@@ -71,4 +74,4 @@ function setupAccordion(selector, panelClass) {
 setupAccordion(".accordion", "show");
 setupAccordion(".accordion-programming", "show-programming");
 
-
+});
