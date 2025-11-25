@@ -222,7 +222,8 @@ header {
 
 .skill-text {
   position: absolute;
-  left: 50%;
+  right: -50px;  /* Menempatkan teks sedikit di luar bar (di sebelah kanan) */
+  text-align: end;
   top: 50%;
   transform: translate(-50%, -50%);
   font-weight: bold;
