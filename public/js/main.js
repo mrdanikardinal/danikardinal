@@ -1,29 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Menyimpan state animasi tiap bar
+  const animationState = new WeakMap();
+
   function animateSkill(bar) {
     const target = parseInt(bar.dataset.progress || 0);
     const text = bar.querySelector(".skill-text");
     const logo = bar.querySelector(".skill-logo");
 
     let width = 0;
-    const interval = setInterval(() => {
-      if (width >= target) {
-        clearInterval(interval);
-        width = target;
+
+    // Hentikan animasi sebelumnya jika ada
+    if (animationState.has(bar)) {
+      cancelAnimationFrame(animationState.get(bar));
+    }
+
+    function step() {
+      if (width < target) {
+        width++;
+        bar.style.width = width + "%";
+        if (text) text.textContent = width + "%";
+
+        if (logo) {
+          const barWidth = bar.getBoundingClientRect().width;
+          const logoWidth = logo.getBoundingClientRect().width;
+          const leftPos = Math.min(barWidth - logoWidth, barWidth * width / 100);
+          logo.style.left = leftPos + "px";
+        }
+
+        const raf = requestAnimationFrame(step);
+        animationState.set(bar, raf);
+      } else {
+        // Pastikan target tepat
+        bar.style.width = target + "%";
+        if (text) text.textContent = target + "%";
       }
+    }
 
-      bar.style.width = width + "%";
-      if (text) text.textContent = width + "%";
-
-      if (logo) {
-        const barWidth = bar.getBoundingClientRect().width;
-        const logoWidth = logo.getBoundingClientRect().width;
-        // Pastikan logo tidak keluar dari bar
-        const leftPos = Math.min(barWidth - logoWidth, barWidth * width / 100);
-        logo.style.left = leftPos + "px";
-      }
-
-      width++;
-    }, 20); // atur kecepatan
+    step();
   }
 
   // Hover animasi
