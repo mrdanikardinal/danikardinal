@@ -313,12 +313,12 @@ header {
 
 .react {
   width: 50%;
-  background-color: #f4240d;
+  background-color: rgb(1, 173, 173);
 }
 
 .angular {
   width: 50%;
-  background-color: #2196F3;
+  background-color: rgb(224, 181, 188);
 }
 
 .django {
