@@ -243,12 +243,12 @@ header {
 
 .html {
   width: 90%;
-  background-color: #04AA6D;
+  background-color: red;
 }
 
 .css {
   width: 80%;
-  background-color: #2196F3;
+  background-color: blue;
 }
 
 /* color programming */
@@ -261,6 +261,14 @@ header {
   width: 85%;
   background-color: #f4240d;
 }
+.backend_java {
+  width: 85%;
+  background-color: #b61907;
+}
+.kotlin {
+  width: 50%;
+  background-color: rgb(202, 157, 8);
+}
 
 .python {
   width: 80%;
@@ -269,46 +277,90 @@ header {
 
 .php {
   width: 85%;
-  background-color: #0f8ebc;
+  background-color: rgb(5, 5, 119);
 }
 
 .sdlc {
   width: 95%;
-  background-color: #1df212;
+  background-color: #089c00;
 }
 
 /* end color programming */
 /* color data structures and algorithms */
+
+.linux {
+  width: 50%;
+  background-color: #a004c7;
+}
+.windows {
+  width: 50%;
+  background-color: rgb(1, 44, 99);
+}
+.macos {
+  width: 50%;
+  background-color: rgb(3, 74, 116);
+}
+.android {
+  width: 50%;
+  background-color: rgb(5, 145, 0);
+}
+
+
 .linked_list {
   width: 50%;
-  background-color: #e8f40d;
+  background-color: #aab300;
 }
 
 .stacks {
   width: 50%;
-  background-color: #f4240d;
+  background-color: #c01300;
 }
 
 .queues {
   width: 50%;
-  background-color: #2196F3;
+  background-color: #036ec5;
 }
 
 .trees {
   width: 50%;
-  background-color: #310fbc;
+  background-color: #2400b3;
 }
 
 .graphs {
   width: 50%;
-  background-color: #310fbc;
+  background-color: #2908afc2;
 }
+
+.mutlithreading_and_concurrency {
+  width: 50%;
+  background-color: #2908afc2;
+}
+
+.network_api_integration {
+  width: 50%;
+  background-color: #2908afc2;
+}
+.android_sdk_android_studio {
+  width: 50%;
+  background-color: #2908afc2;
+}
+.ui_ux_and_matrial_design {
+  width: 50%;
+  background-color: #2908afc2;
+}
+
+
+
 
 /* end color data structures and algorithms */
 /* color frameworks and libraries */
 .springboot {
   width: 50%;
   background-color:green;
+}
+.hibernate {
+  width: 50%;
+  background-color:darkgoldenrod;
 }
 
 .react {
@@ -325,41 +377,63 @@ header {
   width: 50%;
   background-color: #310fbc;
 }
-
+.javascript {
+  width: 50%;
+  background-color: rgb(150, 150, 6);
+}
 .nodejs {
   width: 50%;
-  background-color: #310fbc;
+  background-color: yellow;
 }
 
 .vuejs {
   width: 50%;
-  background-color: #2196F3;
+  background-color: yellowgreen;
 }
 
 /* color databases SQL and noSQL */
 .mysql {
   width: 50%;
-  background-color: #e8f40d;
+  background-color: lightblue;
 }
-
+.jdbc {
+  width: 50%;
+  background-color: blue;
+}
+.sql_and_nosql {
+  width: 50%;
+  background-color: blue;
+}
+.sql_database {
+  width: 50%;
+  background-color: rgb(1, 37, 37);
+}
+.sqllite {
+  width: 50%;
+  background-color:rgb(86, 86, 245);
+}
+.firebase {
+  width: 50%;
+  background-color:rgb(163, 163, 2);
+}
 .postgresql {
   width: 50%;
-  background-color: #f4240d;
+  background-color: blue;
 }
 
 .mongodb {
   width: 50%;
-  background-color: #2196F3;
+  background-color: green;
 }
 
 .cassandra {
   width: 50%;
-  background-color: #310fbc;
+  background-color: blue;
 }
 
 .redis {
   width: 50%;
-  background-color: #310fbc;
+  background-color: red;
 }
 
 /* end color  databases SQL and noSQL */
