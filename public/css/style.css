@@ -94,6 +94,13 @@ header {
   font-weight: bold;
   transition: 0.3s;
   border-radius: 16px 16px 0px 0px;
+  
+}
+.accordion.active{
+ background-color: var(--primary-bg-color);
+ color: var(--primary-color);
+ font-size: large;
+ font-weight: bold;
 }
 
 .accordion:after {
@@ -107,6 +114,7 @@ header {
 
 .active:after {
   content: "\2796";
+  
   /* minus */
 }
 
@@ -152,10 +160,11 @@ header {
   font-size: 15px;
   transition: 0.4s;
 }
-
-.active
-.accordion-programming:hover {
-  background-color: #ccc;
+.accordion-programming.active {
+  background-color: rgba(190, 238, 79, 0.945);
+  color: black;
+  font-size: medium;
+  font-weight: bold;
 }
 
 
@@ -181,6 +190,12 @@ header {
   margin-left: 5px;
   padding-top: 2px;
   /* Tweak manual posisi vertikal */
+}
+.accordion-programming:hover {
+  background-color: rgba(190, 238, 79, 0.945);
+  color: black;
+  font-size: medium;
+  font-weight: bold;
 }
 
 /* IKON KANAN - Saat Active, ubah menjadi Minus */
