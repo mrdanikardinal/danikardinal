@@ -81,41 +81,170 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
 });
-let slideIndex = 1;
+/**
+ * Robust seamless slider
+ * - container: selector untuk slideshow (.slideshow-container)
+ * - slideClass: class tiap slide (mySlides1)
+ * - interval: autoplay interval (ms)
+ * - numberElSelector: optional selector untuk tempat menampilkan "1 / N" (global)
+ */
+function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySlides1", interval = 4000, numberElSelector = null }) {
+  const wrap = document.querySelector(container);
+  if (!wrap) return;
+  const slidesWrapper = wrap.querySelector(".slides-wrapper");
+  if (!slidesWrapper) return;
+  const prevBtn = wrap.querySelector(".prev");
+  const nextBtn = wrap.querySelector(".next");
+  let slides = Array.from(slidesWrapper.querySelectorAll("." + slideClass));
+  if (slides.length === 0) return;
 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides((slideIndex += n));
+  // helper: wait for all images inside slidesWrapper to load
+  function waitImagesLoad() {
+    const imgs = Array.from(slidesWrapper.querySelectorAll("img"));
+    const promises = imgs.map(img => {
+      if (img.complete && img.naturalWidth !== 0) return Promise.resolve();
+      return new Promise((res) => { img.addEventListener("load", res); img.addEventListener("error", res); });
+    });
+    return Promise.all(promises);
+  }
+
+  // init after images loaded
+  waitImagesLoad().then(() => {
+    // clone head & tail for seamless
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[slides.length - 1].cloneNode(true);
+    firstClone.classList.add("clone");
+    lastClone.classList.add("clone");
+    slidesWrapper.appendChild(firstClone);
+    slidesWrapper.insertBefore(lastClone, slidesWrapper.firstChild);
+
+    // refresh slides array
+    slides = Array.from(slidesWrapper.querySelectorAll("." + slideClass));
+    const total = slides.length; // original + 2
+    const originalCount = total - 2;
+
+    // index points to position in slides array; start at first real slide (index 1)
+    let index = 1;
+    let timer = null;
+    let isTransitioning = false;
+
+    // set initial transform instantly (no transition)
+    function setTranslateXInstant(posIndex) {
+      slidesWrapper.style.transition = "none";
+      slidesWrapper.style.transform = `translateX(-${posIndex * 100}%)`;
+      // force reflow
+      slidesWrapper.offsetHeight;
+      slidesWrapper.style.transition = ""; // restore
+    }
+
+    // move with transition
+    function moveTo(posIndex) {
+      // block rapid calls
+      isTransitioning = true;
+      disableButtons(true);
+
+      slidesWrapper.style.transform = `translateX(-${posIndex * 100}%)`;
+    }
+
+    // update number display if selector provided
+    function updateNumberDisplay(actualIndex) {
+      if (!numberElSelector) return;
+      const el = document.querySelector(numberElSelector);
+      if (!el) return;
+      // actualIndex in [1..originalCount]
+      el.textContent = `${actualIndex} / ${originalCount}`;
+    }
+
+    // disable/enable prev/next
+    function disableButtons(disable = true) {
+      if (prevBtn) {
+        prevBtn.classList.toggle("disabled", disable);
+      }
+      if (nextBtn) {
+        nextBtn.classList.toggle("disabled", disable);
+      }
+    }
+
+    // on transition end: handle clones jump
+    slidesWrapper.addEventListener("transitionend", () => {
+      isTransitioning = false;
+      disableButtons(false);
+
+      // if landed on the last clone (index === total-1) -> jump to 1
+      if (index === total - 1) {
+        index = 1;
+        setTranslateXInstant(index);
+      }
+
+      // if landed on the first clone (index === 0) -> jump to last real (total-2)
+      if (index === 0) {
+        index = total - 2;
+        setTranslateXInstant(index);
+      }
+
+      // Update displayed number: convert index to 1..originalCount
+      const actualIndex = ((index - 1 + originalCount) % originalCount) + 1;
+      updateNumberDisplay(actualIndex);
+    });
+
+    // next/prev handlers with guard
+    function next(n = 1) {
+      if (isTransitioning) return; // ignore while animating
+      index += n;
+      moveTo(index);
+      restartAutoplay();
+    }
+    function prev(n = 1) {
+      if (isTransitioning) return;
+      index -= n;
+      moveTo(index);
+      restartAutoplay();
+    }
+
+    // autoplay control
+    function startAutoplay() {
+      stopAutoplay();
+      timer = setInterval(() => next(1), interval);
+    }
+    function stopAutoplay() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+    function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+
+    // attach buttons
+    if (nextBtn) nextBtn.addEventListener("click", () => next(1));
+    if (prevBtn) prevBtn.addEventListener("click", () => prev(1));
+
+    // pause on hover
+    wrap.addEventListener("mouseenter", stopAutoplay);
+    wrap.addEventListener("mouseleave", startAutoplay);
+
+    // keep correct transform on resize
+    let resizeTimeout = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => setTranslateXInstant(index), 120);
+    });
+
+    // initial position & start
+    setTranslateXInstant(index);
+    // show initial number
+    updateNumberDisplay(1);
+    startAutoplay();
+  }); // end waitImagesLoad
 }
 
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides((slideIndex = n));
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {
-    slideIndex = 1;
-  }
-  if (n < 1) {
-    slideIndex = slides.length;
-  }
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].className += " active";
-}
+// usage:
 document.addEventListener("DOMContentLoaded", () => {
-
-  showSlides(slideIndex);
-
+  createRobustSeamlessSlider({
+    container: "#slider1",
+    slideClass: "mySlides1",
+    interval: 2000,
+    numberElSelector: "#global-number" // optional, set null if not using
+  });
 });
+
+
+
 
 

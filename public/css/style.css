@@ -1,8 +1,8 @@
-
 :root {
   --primary-bg-color: rgb(16, 6, 61);
   --primary-color: #ffffff;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -13,7 +13,7 @@ body {
 }
 
 .note {
-  background-color: var(--primary-bg-color) ;
+  background-color: var(--primary-bg-color);
   padding: 5px;
   text-align: center;
   color: white;
@@ -68,11 +68,7 @@ header {
   opacity: 1;
 }
 
-/* start container-skills */
-
-/* end container-skills */
-
-.text {
+.text_from_top_img {
   background-color: #04AA6D;
   color: white;
   font-size: 16px;
@@ -94,13 +90,14 @@ header {
   font-weight: bold;
   transition: 0.3s;
   border-radius: 16px 16px 0px 0px;
-  
+
 }
-.accordion.active{
- background-color: var(--primary-bg-color);
- color: var(--primary-color);
- font-size: large;
- font-weight: bold;
+
+.accordion.active {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
+  font-size: large;
+  font-weight: bold;
 }
 
 .accordion:after {
@@ -114,17 +111,18 @@ header {
 
 .active:after {
   content: "\2796";
-  
+
   /* minus */
 }
 
 .active,
 .accordion:hover {
- background-color: var(--primary-bg-color);
- color: var(--primary-color);
- font-size: large;
- font-weight: bold;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
+  font-size: large;
+  font-weight: bold;
 }
+
 .panel {
   background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
   overflow: hidden;
@@ -160,6 +158,7 @@ header {
   font-size: 15px;
   transition: 0.4s;
 }
+
 .accordion-programming.active {
   background-color: rgba(190, 238, 79, 0.945);
   color: black;
@@ -191,6 +190,7 @@ header {
   padding-top: 2px;
   /* Tweak manual posisi vertikal */
 }
+
 .accordion-programming:hover {
   background-color: rgba(190, 238, 79, 0.945);
   color: black;
@@ -237,7 +237,8 @@ header {
 
 .skill-text {
   position: absolute;
-  right: -50px;  /* Menempatkan teks sedikit di luar bar (di sebelah kanan) */
+  right: -50px;
+  /* Menempatkan teks sedikit di luar bar (di sebelah kanan) */
   text-align: end;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -276,10 +277,12 @@ header {
   width: 85%;
   background-color: #f4240d;
 }
+
 .backend_java {
   width: 85%;
   background-color: #b61907;
 }
+
 .kotlin {
   width: 50%;
   background-color: rgb(202, 157, 8);
@@ -307,14 +310,17 @@ header {
   width: 50%;
   background-color: #a004c7;
 }
+
 .windows {
   width: 50%;
   background-color: rgb(1, 44, 99);
 }
+
 .macos {
   width: 50%;
   background-color: rgb(3, 74, 116);
 }
+
 .android {
   width: 50%;
   background-color: rgb(5, 145, 0);
@@ -355,10 +361,12 @@ header {
   width: 50%;
   background-color: #2908afc2;
 }
+
 .android_sdk_android_studio {
   width: 50%;
   background-color: #2908afc2;
 }
+
 .ui_ux_and_matrial_design {
   width: 50%;
   background-color: #2908afc2;
@@ -371,11 +379,12 @@ header {
 /* color frameworks and libraries */
 .springboot {
   width: 50%;
-  background-color:green;
+  background-color: green;
 }
+
 .hibernate {
   width: 50%;
-  background-color:darkgoldenrod;
+  background-color: darkgoldenrod;
 }
 
 .react {
@@ -392,10 +401,12 @@ header {
   width: 50%;
   background-color: #310fbc;
 }
+
 .javascript {
   width: 50%;
   background-color: rgb(150, 150, 6);
 }
+
 .nodejs {
   width: 50%;
   background-color: yellow;
@@ -411,26 +422,32 @@ header {
   width: 50%;
   background-color: lightblue;
 }
+
 .jdbc {
   width: 50%;
   background-color: blue;
 }
+
 .sql_and_nosql {
   width: 50%;
   background-color: blue;
 }
+
 .sql_database {
   width: 50%;
   background-color: rgb(1, 37, 37);
 }
+
 .sqllite {
   width: 50%;
-  background-color:rgb(86, 86, 245);
+  background-color: rgb(86, 86, 245);
 }
+
 .firebase {
   width: 50%;
-  background-color:rgb(163, 163, 2);
+  background-color: rgb(163, 163, 2);
 }
+
 .postgresql {
   width: 50%;
   background-color: blue;
@@ -459,8 +476,8 @@ header {
 /* Top navigation bar */
 .navbar {
   display: flex;
-  background-color: var(--primary-bg-color) ;
- 
+  background-color: var(--primary-bg-color);
+
 }
 
 /* Navigation bar links */
@@ -517,7 +534,7 @@ header {
 footer {
   padding: 20px;
   text-align: center;
-  background-color: var(--primary-bg-color) ;
+  background-color: var(--primary-bg-color);
   color: var(--primary-color);
 }
 
@@ -542,88 +559,99 @@ footer {
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
   position: relative;
-  margin: auto;
+  width: 100%;
+  overflow: hidden;
+  min-height: 500px;
 }
 
-/* Hide the images by default */
-.mySlides {
-  display: none;
+/* container & track (seamless) */
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
+.slides-wrapper {
+  display: flex;
+  transition: transform 0.8s ease;
+  will-change: transform;
+}
+
+/* slide */
+.mySlides1 {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.mySlides1 img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* prev/next visible & clickable */
+.prev,
+.next {
   position: absolute;
   top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
+  transform: translateY(-50%);
+  padding: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
   user-select: none;
+  z-index: 50;
+  /* pastikan tombol di atas slides */
+  pointer-events: auto;
+  /* jangan terpengaruh oleh parent */
 }
 
-/* Position the "next button" to the right */
+.prev {
+  left: 8px;
+}
+
 .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+  right: 8px;
 }
 
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+/* non-active ketika disabled (visual cue) */
+.prev.disabled,
+.next.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-/* Caption text */
-.text {
+
+/* On hover */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* caption */
+.text1 {
   color: #f2f2f2;
+  background-color: #04AA6D;
   font-size: 15px;
-  padding: 8px 12px;
+  height: 60px;
+  line-height: 60px;
   position: absolute;
   bottom: 8px;
   width: 100%;
   text-align: center;
 }
 
-/* Number text (1/3 etc) */
+/* Number text */
 .numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
+
+  color: #ffffff;
+  font-size: large;
+  font-weight: bold;
   padding: 8px 12px;
   position: absolute;
   top: 0;
-}
+  white-space: nowrap;      /* supaya tidak turun baris */
 
-/* The dots/bullets/indicators */
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  text-decoration: none;          
-  transition: background-color 0.3s; /* efek saat hover */
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-
-.active, .dot:hover {
-  background-color: #717171;
-}
-
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
 }
