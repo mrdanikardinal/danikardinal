@@ -23,7 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (logo) {
           const barWidth = bar.getBoundingClientRect().width;
           const logoWidth = logo.getBoundingClientRect().width;
-          const leftPos = Math.min(barWidth - logoWidth, barWidth * width / 100);
+          const leftPos = Math.min(
+            barWidth - logoWidth,
+            (barWidth * width) / 100
+          );
           logo.style.left = leftPos + "px";
         }
 
@@ -75,4 +78,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");
+
+  
 });
+let slideIndex = 1;
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides((slideIndex += n));
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides((slideIndex = n));
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {
+    slideIndex = 1;
+  }
+  if (n < 1) {
+    slideIndex = slides.length;
+  }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].className += " active";
+}
+document.addEventListener("DOMContentLoaded", () => {
+
+  showSlides(slideIndex);
+
+});
+
+

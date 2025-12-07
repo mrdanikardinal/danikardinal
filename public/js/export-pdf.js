@@ -103,3 +103,5 @@ async function exportPDF() {
 
 // Event listener
 document.getElementById("btnExport").addEventListener("click", exportPDF);
+
+
