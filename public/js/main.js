@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * - interval: autoplay interval (ms)
  * - numberElSelector: optional selector untuk tempat menampilkan "1 / N" (global)
  */
-function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySlides1", interval = 4000}) {
+function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySlides", interval = 4000}) {
   const wrap = document.querySelector(container);
   if (!wrap) return;
   const slidesWrapper = wrap.querySelector(".slides-wrapper");
@@ -228,10 +228,14 @@ function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySl
 // usage:
 document.addEventListener("DOMContentLoaded", () => {
   createRobustSeamlessSlider({
-    container: "#slider1",
-    slideClass: "mySlides1",
+    container: "#slider",
+    slideClass: "mySlides",
     interval: 2000
- 
+  });
+   createRobustSeamlessSlider({
+    container: "#slider2",
+    slideClass: "mySlides2",
+    interval: 2000
   });
 });
 
