@@ -565,63 +565,97 @@ footer {
   min-height: 500px;
 }
 
-/* container & track (seamless) */
-.slideshow-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
+/* Wrapper slides */
 .slides-wrapper {
   display: flex;
   transition: transform 0.8s ease;
   will-change: transform;
 }
 
-/* slide */
+/* Slide */
 .mySlides1 {
   min-width: 100%;
   box-sizing: border-box;
 }
 
+/* Gambar */
 .mySlides1 img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* prev/next visible & clickable */
+/* Tombol prev/next */
 .prev,
 .next {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 50%; /* posisi vertikal tengah */
+  transform: translateY(-50%); /* Menjaga tombol tetap di tengah vertikal */
   padding: 12px;
   color: #fff;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 4px;
   cursor: pointer;
+  font-size: 100px; 
   user-select: none;
-  z-index: 50;
-  /* pastikan tombol di atas slides */
-  pointer-events: auto;
-  /* jangan terpengaruh oleh parent */
+  z-index: 50; /* pastikan tombol berada di atas gambar */
+  pointer-events: auto; /* tetap interaktif meskipun berada di atas gambar */
 }
 
+/* Tombol prev di kiri */
 .prev {
   left: 8px;
 }
 
+/* Tombol next di kanan */
 .next {
   right: 8px;
 }
-
-/* non-active ketika disabled (visual cue) */
-.prev.disabled,
-.next.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+@media screen and (min-width: 821px) and (max-width: 920px) {
+  .prev, .next {
+    padding: 8px;
+    font-size: 50px; /* sesuaikan ukuran font pada perangkat kecil */
+    position: absolute;
+    margin-top: -60px;
+  }
 }
+@media screen and (min-width: 719px) and (max-width: 820px) {
+  .prev, .next {
+    padding: 8px;
+    font-size: 50px; /* sesuaikan ukuran font pada perangkat kecil */
+    position: absolute;
+    margin-top: -60px;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 718px) {
+  .prev, .next {
+    padding: 8px;
+    font-size: 50px; /* sesuaikan ukuran font pada perangkat kecil */
+    position: absolute;
+    margin-top: -60px;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px) {
+  .prev, .next {
+    padding: 8px;
+    font-size: 50px; /* sesuaikan ukuran font pada perangkat kecil */
+    position: absolute;
+    margin-top: -110px;
+  }
+}
+@media screen and (min-width: 300px) and (max-width: 400px) {
+  .prev, .next {
+    padding: 8px;
+    font-size: 50px; /* sesuaikan ukuran font pada perangkat kecil */
+    position: absolute;
+    margin-top: -150px;
+  }
+}
+
+
+
 
 
 /* On hover */

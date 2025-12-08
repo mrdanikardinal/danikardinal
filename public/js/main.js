@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * - interval: autoplay interval (ms)
  * - numberElSelector: optional selector untuk tempat menampilkan "1 / N" (global)
  */
-function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySlides1", interval = 4000, numberElSelector = null }) {
+function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySlides1", interval = 4000}) {
   const wrap = document.querySelector(container);
   if (!wrap) return;
   const slidesWrapper = wrap.querySelector(".slides-wrapper");
@@ -146,14 +146,7 @@ function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySl
       slidesWrapper.style.transform = `translateX(-${posIndex * 100}%)`;
     }
 
-    // update number display if selector provided
-    function updateNumberDisplay(actualIndex) {
-      if (!numberElSelector) return;
-      const el = document.querySelector(numberElSelector);
-      if (!el) return;
-      // actualIndex in [1..originalCount]
-      el.textContent = `${actualIndex} / ${originalCount}`;
-    }
+    
 
     // disable/enable prev/next
     function disableButtons(disable = true) {
@@ -184,7 +177,6 @@ function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySl
 
       // Update displayed number: convert index to 1..originalCount
       const actualIndex = ((index - 1 + originalCount) % originalCount) + 1;
-      updateNumberDisplay(actualIndex);
     });
 
     // next/prev handlers with guard
@@ -229,7 +221,6 @@ function createRobustSeamlessSlider({ container = "#slider1", slideClass = "mySl
     // initial position & start
     setTranslateXInstant(index);
     // show initial number
-    updateNumberDisplay(1);
     startAutoplay();
   }); // end waitImagesLoad
 }
@@ -239,8 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
   createRobustSeamlessSlider({
     container: "#slider1",
     slideClass: "mySlides1",
-    interval: 2000,
-    numberElSelector: "#global-number" // optional, set null if not using
+    interval: 2000
+ 
   });
 });
 
