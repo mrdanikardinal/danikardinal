@@ -249,11 +249,155 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
   });
 }
 
-// Usage
 document.addEventListener("DOMContentLoaded", () => {
+  // --- Inisialisasi slider ---
   createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 2000 });
   createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
+
+  // --- Konfigurasi slider untuk overlay ---
+  const sliders = [
+    { wrap: "#slider", class: "mySlides" },
+    { wrap: "#slider2", class: "mySlides2" }
+  ];
+
+  // --- Inisialisasi overlay ---
+  createImageOverlay(sliders, "#imgOverlay");
 });
+
+
+/**
+ * Fungsi modular untuk overlay gambar
+ */
+function createImageOverlay(sliders, overlaySelector) {
+  const overlay = document.querySelector(overlaySelector);
+  if (!overlay) return;
+
+  const overlayImg = overlay.querySelector(".overlayImg");
+  const overlayPrev = overlay.querySelector(".overlayPrev");
+  const overlayNext = overlay.querySelector(".overlayNext");
+  const closeOverlay = overlay.querySelector(".closeOverlay");
+
+
+  // --- Tambahkan tombol download ---
+let downloadBtn = overlay.querySelector(".downloadOverlay");
+if (!downloadBtn) {
+  downloadBtn = document.createElement("a");
+  downloadBtn.className = "downloadOverlay";
+  downloadBtn.textContent = "Download"; // teks
+  downloadBtn.style.position = "absolute";
+  downloadBtn.style.top = "20px";
+  downloadBtn.style.left = "40px";
+  downloadBtn.style.fontSize = "20px";
+  downloadBtn.style.color = "white";
+  downloadBtn.style.textDecoration = "none";
+  downloadBtn.style.background = "rgba(0,0,0,0.4)";
+  downloadBtn.style.padding = "6px 12px";
+  downloadBtn.style.borderRadius = "4px";
+  downloadBtn.style.zIndex = 60000;
+  downloadBtn.style.cursor = "pointer";
+  downloadBtn.style.transition = "all 0.3s ease"; // smooth transition
+
+  // Hover effect
+  downloadBtn.addEventListener("mouseenter", () => {
+    downloadBtn.style.background = "rgba(0,0,0,0.7)";
+    downloadBtn.style.transform = "scale(1.1)";
+  });
+  downloadBtn.addEventListener("mouseleave", () => {
+    downloadBtn.style.background = "rgba(0,0,0,0.4)";
+    downloadBtn.style.transform = "scale(1)";
+  });
+
+  overlay.appendChild(downloadBtn);
+}
+
+
+  let currentSlider = null;
+  let currentIndex = 0;
+  let slidesArray = [];
+
+  function openOverlay(sliderID, index) {
+    currentSlider = sliderID;
+    currentIndex = index;
+
+    const slideSel = sliders.find(s => s.wrap === sliderID)?.class;
+    slidesArray = Array.from(
+      document.querySelector(sliderID).querySelectorAll("." + slideSel)
+    );
+
+    overlayImg.src = slidesArray[currentIndex].querySelector("img").src;
+    downloadBtn.href = overlayImg.src;
+    downloadBtn.download = overlayImg.src.split("/").pop(); // nama file default
+
+    overlay.style.display = "flex";
+    overlayImg.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    overlayImg.style.opacity = 0;
+    overlayImg.style.transform = "scale(0.8)";
+
+    requestAnimationFrame(() => {
+      overlay.classList.add("show");
+      overlayImg.style.opacity = 1;
+      overlayImg.style.transform = "scale(1)";
+    });
+  }
+
+  function fadeOverlayImage(newIndex) {
+    overlayImg.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    overlayImg.style.opacity = 0;
+    overlayImg.style.transform = "scale(0.8)";
+
+    setTimeout(() => {
+      currentIndex = newIndex;
+      overlayImg.src = slidesArray[currentIndex].querySelector("img").src;
+
+      // update download button
+      downloadBtn.href = overlayImg.src;
+      downloadBtn.download = overlayImg.src.split("/").pop();
+
+      requestAnimationFrame(() => {
+        overlayImg.style.opacity = 1;
+        overlayImg.style.transform = "scale(1)";
+      });
+    }, 600);
+  }
+
+  function overlayNextImg() {
+    fadeOverlayImage((currentIndex + 1) % slidesArray.length);
+  }
+
+  function overlayPrevImg() {
+    fadeOverlayImage((currentIndex - 1 + slidesArray.length) % slidesArray.length);
+  }
+
+  function closeOverlayFunc() {
+    overlayImg.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    overlayImg.style.opacity = 0;
+    overlayImg.style.transform = "scale(0.8)";
+    overlay.classList.remove("show");
+    setTimeout(() => (overlay.style.display = "none"), 600);
+  }
+
+  // --- Event listeners ---
+  overlayNext.addEventListener("click", overlayNextImg);
+  overlayPrev.addEventListener("click", overlayPrevImg);
+  closeOverlay.addEventListener("click", closeOverlayFunc);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeOverlayFunc();
+  });
+
+  sliders.forEach(({ wrap, class: slideClass }) => {
+    const container = document.querySelector(wrap);
+    if (!container) return;
+
+    const slides = container.querySelectorAll("." + slideClass + " img");
+    slides.forEach((img, index) => {
+      img.addEventListener("click", () => openOverlay(wrap, index));
+    });
+  });
+
+  return { openOverlay, overlayNextImg, overlayPrevImg, closeOverlayFunc };
+}
+
+
 
 
 

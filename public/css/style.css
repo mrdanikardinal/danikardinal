@@ -684,6 +684,77 @@ footer .contact p {
 
 }
 /* End Slideshow container */
+/* Overlay fullscreen */
+/* Overlay fullscreen */
+.img-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 50000;
+
+  /* animasi fade */
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.img-overlay.show {
+  display: flex;
+  opacity: 1;
+}
+
+.img-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+
+  /* animasi zoom */
+  transform: scale(0.8);
+  transition: transform 0.9s ease, opacity 0.9s ease;
+}
+
+.img-overlay.show img {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* tombol close */
+.closeOverlay {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 50px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* tombol next prev */
+.overlayPrev,
+.overlayNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 90px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  user-select: none;
+  z-index: 10;
+}
+
+.overlayPrev { left: 40px; }
+.overlayNext { right: 40px; }
+
+.overlayPrev:hover, .overlayNext:hover {
+  color: #ddd;
+}
+
+
+
+/* End Overlay fullscreen */
 
 
 @media screen and (min-width: 250px) and (max-width: 500px) {
