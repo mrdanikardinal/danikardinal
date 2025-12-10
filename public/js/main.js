@@ -88,100 +88,113 @@ document.addEventListener("DOMContentLoaded", () => {
  * - interval: autoplay interval (ms)
  * - numberElSelector: optional selector untuk tempat menampilkan "1 / N" (global)
  */
-function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySlides", interval = 4000}) {
+function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySlides", interval = 4000 }) {
   const wrap = document.querySelector(container);
   if (!wrap) return;
+
   const slidesWrapper = wrap.querySelector(".slides-wrapper");
   if (!slidesWrapper) return;
+
   const prevBtn = wrap.querySelector(".prev");
   const nextBtn = wrap.querySelector(".next");
+
   let slides = Array.from(slidesWrapper.querySelectorAll("." + slideClass));
   if (slides.length === 0) return;
 
-  // helper: wait for all images inside slidesWrapper to load
+  // helper: wait for all images to load
   function waitImagesLoad() {
     const imgs = Array.from(slidesWrapper.querySelectorAll("img"));
     const promises = imgs.map(img => {
       if (img.complete && img.naturalWidth !== 0) return Promise.resolve();
-      return new Promise((res) => { img.addEventListener("load", res); img.addEventListener("error", res); });
+      return new Promise((res) => {
+        img.addEventListener("load", res);
+        img.addEventListener("error", res);
+      });
     });
     return Promise.all(promises);
   }
 
-  // init after images loaded
   waitImagesLoad().then(() => {
-    // clone head & tail for seamless
+
+    // clone head & tail
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[slides.length - 1].cloneNode(true);
     firstClone.classList.add("clone");
     lastClone.classList.add("clone");
+
     slidesWrapper.appendChild(firstClone);
     slidesWrapper.insertBefore(lastClone, slidesWrapper.firstChild);
 
-    // refresh slides array
     slides = Array.from(slidesWrapper.querySelectorAll("." + slideClass));
-    const total = slides.length; // original + 2
+    const total = slides.length;
     const originalCount = total - 2;
 
-    // index points to position in slides array; start at first real slide (index 1)
     let index = 1;
     let timer = null;
     let isTransitioning = false;
 
-    // set initial transform instantly (no transition)
+    // -------------------------------
+    // Safe function to set instant transform
+    // -------------------------------
     function setTranslateXInstant(posIndex) {
+      const prevTransition = slidesWrapper.style.transition;
       slidesWrapper.style.transition = "none";
       slidesWrapper.style.transform = `translateX(-${posIndex * 100}%)`;
-      // force reflow
-      slidesWrapper.offsetHeight;
-      slidesWrapper.style.transition = ""; // restore
+
+      // restore transition safely via RAF
+      requestAnimationFrame(() => {
+        slidesWrapper.style.transition = prevTransition || "transform 0.8s ease";
+      });
     }
 
-    // move with transition
+    // -------------------------------
+    // Move to slide with animation
+    // -------------------------------
     function moveTo(posIndex) {
-      // block rapid calls
       isTransitioning = true;
       disableButtons(true);
 
       slidesWrapper.style.transform = `translateX(-${posIndex * 100}%)`;
+
+      // fallback: if transitionend never fires (Chrome DevTools resize bug)
+      clearTimeout(slidesWrapper._transitionFallback);
+      slidesWrapper._transitionFallback = setTimeout(() => {
+        if (isTransitioning) {
+          isTransitioning = false;
+          disableButtons(false);
+        }
+      }, 1100); // slightly > transition duration
     }
 
-    
-
-    // disable/enable prev/next
     function disableButtons(disable = true) {
-      if (prevBtn) {
-        prevBtn.classList.toggle("disabled", disable);
-      }
-      if (nextBtn) {
-        nextBtn.classList.toggle("disabled", disable);
-      }
+      prevBtn?.classList.toggle("disabled", disable);
+      nextBtn?.classList.toggle("disabled", disable);
     }
 
-    // on transition end: handle clones jump
+    // -------------------------------
+    // transitionend handler
+    // -------------------------------
     slidesWrapper.addEventListener("transitionend", () => {
+      clearTimeout(slidesWrapper._transitionFallback);
       isTransitioning = false;
       disableButtons(false);
 
-      // if landed on the last clone (index === total-1) -> jump to 1
       if (index === total - 1) {
         index = 1;
         setTranslateXInstant(index);
       }
 
-      // if landed on the first clone (index === 0) -> jump to last real (total-2)
       if (index === 0) {
         index = total - 2;
         setTranslateXInstant(index);
       }
-
-      // Update displayed number: convert index to 1..originalCount
-      const actualIndex = ((index - 1 + originalCount) % originalCount) + 1;
     });
 
-    // next/prev handlers with guard
+    // -------------------------------
+    // next / prev
+    // -------------------------------
     function next(n = 1) {
-      if (isTransitioning) return; // ignore while animating
+      if (isTransitioning) return;
       index += n;
       moveTo(index);
       restartAutoplay();
@@ -193,51 +206,55 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
       restartAutoplay();
     }
 
-    // autoplay control
+    nextBtn?.addEventListener("click", () => next(1));
+    prevBtn?.addEventListener("click", () => prev(1));
+
+    // -------------------------------
+    // autoplay
+    // -------------------------------
     function startAutoplay() {
       stopAutoplay();
       timer = setInterval(() => next(1), interval);
     }
     function stopAutoplay() {
-      if (timer) { clearInterval(timer); timer = null; }
+      if (timer) clearInterval(timer);
+      timer = null;
     }
-    function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+    function restartAutoplay() {
+      stopAutoplay();
+      startAutoplay();
+    }
 
-    // attach buttons
-    if (nextBtn) nextBtn.addEventListener("click", () => next(1));
-    if (prevBtn) prevBtn.addEventListener("click", () => prev(1));
-
-    // pause on hover
     wrap.addEventListener("mouseenter", stopAutoplay);
     wrap.addEventListener("mouseleave", startAutoplay);
 
-    // keep correct transform on resize
+    // -------------------------------
+    // FIX 1 — Reset isTransitioning on resize
+    // -------------------------------
     let resizeTimeout = null;
     window.addEventListener("resize", () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => setTranslateXInstant(index), 120);
+      resizeTimeout = setTimeout(() => {
+
+        isTransitioning = false;   // <<< FIX 1
+        disableButtons(false);
+
+        setTranslateXInstant(index);
+      }, 150);
     });
 
-    // initial position & start
+    // start
     setTranslateXInstant(index);
-    // show initial number
     startAutoplay();
-  }); // end waitImagesLoad
+  });
 }
 
-// usage:
+// Usage
 document.addEventListener("DOMContentLoaded", () => {
-  createRobustSeamlessSlider({
-    container: "#slider",
-    slideClass: "mySlides",
-    interval: 2000
-  });
-   createRobustSeamlessSlider({
-    container: "#slider2",
-    slideClass: "mySlides2",
-    interval: 2000
-  });
+  createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 2000 });
+  createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
 });
+
 
 
 
