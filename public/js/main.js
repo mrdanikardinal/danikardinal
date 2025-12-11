@@ -1,93 +1,80 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Menyimpan state animasi tiap bar
-  const animationState = new WeakMap();
+// Start Accordion
+// Menyimpan state animasi tiap bar
+const animationState = new WeakMap();
+function animateSkill(bar) {
+  const target = parseInt(bar.dataset.progress || 0);
+  const text = bar.querySelector(".skill-text");
+  const logo = bar.querySelector(".skill-logo");
 
-  function animateSkill(bar) {
-    const target = parseInt(bar.dataset.progress || 0);
-    const text = bar.querySelector(".skill-text");
-    const logo = bar.querySelector(".skill-logo");
+  let width = 0;
 
-    let width = 0;
-
-    // Hentikan animasi sebelumnya jika ada
-    if (animationState.has(bar)) {
-      cancelAnimationFrame(animationState.get(bar));
-    }
-
-    function step() {
-      if (width < target) {
-        width++;
-        bar.style.width = width + "%";
-        if (text) text.textContent = width + "%";
-
-        if (logo) {
-          const barWidth = bar.getBoundingClientRect().width;
-          const logoWidth = logo.getBoundingClientRect().width;
-          const leftPos = Math.min(
-            barWidth - logoWidth,
-            (barWidth * width) / 100
-          );
-          logo.style.left = leftPos + "px";
-        }
-
-        const raf = requestAnimationFrame(step);
-        animationState.set(bar, raf);
-      } else {
-        // Pastikan target tepat
-        bar.style.width = target + "%";
-        if (text) text.textContent = target + "%";
-      }
-    }
-
-    step();
+  // Hentikan animasi sebelumnya jika ada
+  if (animationState.has(bar)) {
+    cancelAnimationFrame(animationState.get(bar));
   }
 
-  // Hover animasi
-  document.querySelectorAll(".skills").forEach((bar) => {
-    const parent = bar.parentElement;
-    parent.addEventListener("mouseenter", () => {
-      bar.style.width = "0%";
-      const text = bar.querySelector(".skill-text");
-      if (text) text.textContent = "0%";
-      animateSkill(bar);
+  function step() {
+    if (width < target) {
+      width++;
+      bar.style.width = width + "%";
+      if (text) text.textContent = width + "%";
+
+      if (logo) {
+        const barWidth = bar.getBoundingClientRect().width;
+        const logoWidth = logo.getBoundingClientRect().width;
+        const leftPos = Math.min(
+          barWidth - logoWidth,
+          (barWidth * width) / 100
+        );
+        logo.style.left = leftPos + "px";
+      }
+
+      const raf = requestAnimationFrame(step);
+      animationState.set(bar, raf);
+    } else {
+      // Pastikan target tepat
+      bar.style.width = target + "%";
+      if (text) text.textContent = target + "%";
+    }
+  }
+  step();
+}
+
+// Hover animasi
+document.querySelectorAll(".skills").forEach((bar) => {
+  const parent = bar.parentElement;
+  parent.addEventListener("mouseenter", () => {
+    bar.style.width = "0%";
+    const text = bar.querySelector(".skill-text");
+    if (text) text.textContent = "0%";
+    animateSkill(bar);
+  });
+});
+
+// Accordion animasi
+function setupAccordion(selector, panelClass) {
+  const accordions = document.querySelectorAll(selector);
+
+  accordions.forEach((accordion) => {
+    accordion.addEventListener("click", () => {
+      accordion.classList.toggle("active");
+      const panel = accordion.nextElementSibling;
+      panel.classList.toggle(panelClass);
+
+      if (panel.classList.contains(panelClass)) {
+        const barsInPanel = panel.querySelectorAll(".skills");
+        barsInPanel.forEach((bar) => {
+          bar.style.width = "0%";
+          const text = bar.querySelector(".skill-text");
+          if (text) text.textContent = "0%";
+          animateSkill(bar);
+        });
+      }
     });
   });
-
-  // Accordion animasi
-  function setupAccordion(selector, panelClass) {
-    const accordions = document.querySelectorAll(selector);
-
-    accordions.forEach((accordion) => {
-      accordion.addEventListener("click", () => {
-        accordion.classList.toggle("active");
-        const panel = accordion.nextElementSibling;
-        panel.classList.toggle(panelClass);
-
-        if (panel.classList.contains(panelClass)) {
-          const barsInPanel = panel.querySelectorAll(".skills");
-          barsInPanel.forEach((bar) => {
-            bar.style.width = "0%";
-            const text = bar.querySelector(".skill-text");
-            if (text) text.textContent = "0%";
-            animateSkill(bar);
-          });
-        }
-      });
-    });
-  }
-
-  setupAccordion(".accordion", "show");
-  setupAccordion(".accordion-programming", "show-programming");
-
-  
-});
-/**
- * Robust seamless slider
- * - container: selector untuk slideshow (.slideshow-container)
- * - slideClass: class tiap slide (mySlides1)
- * - interval: autoplay interval (ms)
- * - numberElSelector: optional selector untuk tempat menampilkan "1 / N" (global)
- */
+}
+// End Accordion
+// Start Slider
 function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySlides", interval = 4000 }) {
   const wrap = document.querySelector(container);
   if (!wrap) return;
@@ -132,10 +119,7 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
     let index = 1;
     let timer = null;
     let isTransitioning = false;
-
-    // -------------------------------
     // Safe function to set instant transform
-    // -------------------------------
     function setTranslateXInstant(posIndex) {
       const prevTransition = slidesWrapper.style.transition;
       slidesWrapper.style.transition = "none";
@@ -146,10 +130,7 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
         slidesWrapper.style.transition = prevTransition || "transform 0.8s ease";
       });
     }
-
-    // -------------------------------
     // Move to slide with animation
-    // -------------------------------
     function moveTo(posIndex) {
       isTransitioning = true;
       disableButtons(true);
@@ -163,17 +144,14 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
           isTransitioning = false;
           disableButtons(false);
         }
-      }, 1100); // slightly > transition duration
+      }, 1100);
     }
 
     function disableButtons(disable = true) {
       prevBtn?.classList.toggle("disabled", disable);
       nextBtn?.classList.toggle("disabled", disable);
     }
-
-    // -------------------------------
     // transitionend handler
-    // -------------------------------
     slidesWrapper.addEventListener("transitionend", () => {
       clearTimeout(slidesWrapper._transitionFallback);
       isTransitioning = false;
@@ -189,10 +167,7 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
         setTranslateXInstant(index);
       }
     });
-
-    // -------------------------------
     // next / prev
-    // -------------------------------
     function next(n = 1) {
       if (isTransitioning) return;
       index += n;
@@ -205,13 +180,9 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
       moveTo(index);
       restartAutoplay();
     }
-
     nextBtn?.addEventListener("click", () => next(1));
     prevBtn?.addEventListener("click", () => prev(1));
-
-    // -------------------------------
     // autoplay
-    // -------------------------------
     function startAutoplay() {
       stopAutoplay();
       timer = setInterval(() => next(1), interval);
@@ -227,16 +198,13 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
 
     wrap.addEventListener("mouseenter", stopAutoplay);
     wrap.addEventListener("mouseleave", startAutoplay);
-
-    // -------------------------------
-    // FIX 1 — Reset isTransitioning on resize
-    // -------------------------------
+    //Reset isTransitioning on resize
     let resizeTimeout = null;
     window.addEventListener("resize", () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
 
-        isTransitioning = false;   // <<< FIX 1
+        isTransitioning = false;
         disableButtons(false);
 
         setTranslateXInstant(index);
@@ -248,26 +216,8 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
     startAutoplay();
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  // --- Inisialisasi slider ---
-  createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 2000 });
-  createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
-
-  // --- Konfigurasi slider untuk overlay ---
-  const sliders = [
-    { wrap: "#slider", class: "mySlides" },
-    { wrap: "#slider2", class: "mySlides2" }
-  ];
-
-  // --- Inisialisasi overlay ---
-  createImageOverlay(sliders, "#imgOverlay");
-});
-
-
-/**
- * Fungsi modular untuk overlay gambar
- */
+// End Slider
+// Start Overlay Image Zoom
 function createImageOverlay(sliders, overlaySelector) {
   const overlay = document.querySelector(overlaySelector);
   if (!overlay) return;
@@ -278,37 +228,37 @@ function createImageOverlay(sliders, overlaySelector) {
   const closeOverlay = overlay.querySelector(".closeOverlay");
 
 
-  // --- Tambahkan tombol download ---
-let downloadBtn = overlay.querySelector(".downloadOverlay");
-if (!downloadBtn) {
-  downloadBtn = document.createElement("a");
-  downloadBtn.className = "downloadOverlay";
-  downloadBtn.textContent = "Download"; // teks
-  downloadBtn.style.position = "absolute";
-  downloadBtn.style.top = "20px";
-  downloadBtn.style.left = "40px";
-  downloadBtn.style.fontSize = "20px";
-  downloadBtn.style.color = "white";
-  downloadBtn.style.textDecoration = "none";
-  downloadBtn.style.background = "rgba(0,0,0,0.4)";
-  downloadBtn.style.padding = "6px 12px";
-  downloadBtn.style.borderRadius = "4px";
-  downloadBtn.style.zIndex = 60000;
-  downloadBtn.style.cursor = "pointer";
-  downloadBtn.style.transition = "all 0.3s ease"; // smooth transition
-
-  // Hover effect
-  downloadBtn.addEventListener("mouseenter", () => {
-    downloadBtn.style.background = "rgba(0,0,0,0.7)";
-    downloadBtn.style.transform = "scale(1.1)";
-  });
-  downloadBtn.addEventListener("mouseleave", () => {
+  //Tambahkan tombol download
+  let downloadBtn = overlay.querySelector(".downloadOverlay");
+  if (!downloadBtn) {
+    downloadBtn = document.createElement("a");
+    downloadBtn.className = "downloadOverlay";
+    downloadBtn.textContent = "Download"; // teks
+    downloadBtn.style.position = "absolute";
+    downloadBtn.style.top = "20px";
+    downloadBtn.style.left = "40px";
+    downloadBtn.style.fontSize = "20px";
+    downloadBtn.style.color = "white";
+    downloadBtn.style.textDecoration = "none";
     downloadBtn.style.background = "rgba(0,0,0,0.4)";
-    downloadBtn.style.transform = "scale(1)";
-  });
+    downloadBtn.style.padding = "6px 12px";
+    downloadBtn.style.borderRadius = "4px";
+    downloadBtn.style.zIndex = 60000;
+    downloadBtn.style.cursor = "pointer";
+    downloadBtn.style.transition = "all 0.3s ease"; // smooth transition
 
-  overlay.appendChild(downloadBtn);
-}
+    // Hover effect
+    downloadBtn.addEventListener("mouseenter", () => {
+      downloadBtn.style.background = "rgba(0,0,0,0.7)";
+      downloadBtn.style.transform = "scale(1.1)";
+    });
+    downloadBtn.addEventListener("mouseleave", () => {
+      downloadBtn.style.background = "rgba(0,0,0,0.4)";
+      downloadBtn.style.transform = "scale(1)";
+    });
+
+    overlay.appendChild(downloadBtn);
+  }
 
 
   let currentSlider = null;
@@ -396,6 +346,27 @@ if (!downloadBtn) {
 
   return { openOverlay, overlayNextImg, overlayPrevImg, closeOverlayFunc };
 }
+// End Overlay Image Zoom
+// Start Konfigurasi slider untuk overlay
+const sliders = [
+  { wrap: "#slider", class: "mySlides" },
+  { wrap: "#slider2", class: "mySlides2" }
+];
+// End Konfigurasi slider untuk overlay
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupAccordion(".accordion", "show");
+  setupAccordion(".accordion-programming", "show-programming");
+  // Inisialisasi slider
+  createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 2000 });
+  createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
+  //Inisialisasi overlay 
+  createImageOverlay(sliders, "#imgOverlay");
+
+});
+
+
 
 
 
