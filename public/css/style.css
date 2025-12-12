@@ -612,13 +612,13 @@ footer .contact p {
 }
 
 /* Slide */
-.mySlides,.mySlides2{
+.mySlides,.mySlides2,.mySlides3,.mySlides4 {
   min-width: 100%;
   box-sizing: border-box;
 }
 
 /* Gambar */
-.mySlides img,.mySlides2 img {
+.mySlides img,.mySlides2 img,.mySlides3 img,.mySlides4 img {
   display: block;
   width: 100%;
   height: auto;
@@ -674,7 +674,7 @@ footer .contact p {
 /* Number text */
 .numbertext {
 
-  color: #ffffff;
+  color: #fd04fd;
   font-size: large;
   font-weight: bold;
   padding: 8px 12px;

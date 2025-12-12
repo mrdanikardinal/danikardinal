@@ -350,7 +350,9 @@ function createImageOverlay(sliders, overlaySelector) {
 // Start Konfigurasi slider untuk overlay
 const sliders = [
   { wrap: "#slider", class: "mySlides" },
-  { wrap: "#slider2", class: "mySlides2" }
+  { wrap: "#slider2", class: "mySlides2" },
+    { wrap: "#slider3", class: "mySlides3" },
+  { wrap: "#slider4", class: "mySlides4" }
 ];
 // End Konfigurasi slider untuk overlay
 
@@ -361,6 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inisialisasi slider
   createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 2000 });
   createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
+  createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 2000 });
+  createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 2000 });
+
   //Inisialisasi overlay 
   createImageOverlay(sliders, "#imgOverlay");
 
