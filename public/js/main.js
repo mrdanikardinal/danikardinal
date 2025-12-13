@@ -449,7 +449,6 @@ const sliders = [
 ];
 // End Konfigurasi slider untuk overlay
 
-
 // 
 function initNodeHeader(selector, options = {}) {
   const header = document.querySelector(selector);
@@ -624,15 +623,14 @@ function initNodeHeader(selector, options = {}) {
   };
 }
 
-// 
 document.addEventListener("DOMContentLoaded", () => {
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");
   // Inisialisasi slider
-  createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 2000 });
-  createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
-  createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 2000 });
-  createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 2000 });
+  createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 4000 });
+  createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 4000 });
+  createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 4000 });
+  createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 4000 });
   // 
   const nodeHeader = initNodeHeader("header", {
     nodeCount: 200,
