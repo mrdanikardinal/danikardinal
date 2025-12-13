@@ -22,7 +22,7 @@ body {
 /* Header */
 header {
   position: relative;        /* WAJIB */
-  height: 300px;             /* WAJIB */
+  height: 400px;             /* WAJIB */
   padding: 60px;
   text-align: center;
   /* background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253)); */
@@ -499,22 +499,32 @@ header {
 .navbar {
   display: flex;
   background-color: var(--primary-bg-color);
-
 }
 
-/* Navigation bar links */
-.navbar a {
+/* style untuk a dan button */
+.navbar a,
+.navbar button {
   color: var(--primary-color);
   padding: 14px 20px;
   text-decoration: none;
   text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit; /* penting agar font sama */
 }
 
-/* Change color on hover */
-.navbar a:hover {
-  background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
+/* hover effect */
+.navbar a:hover,
+.navbar button:hover {
+  background-image: linear-gradient(
+    to left,
+    rgb(124, 238, 191),
+    rgb(126, 156, 253)
+  );
   color: black;
 }
+
 
 /* Column container */
 .container {

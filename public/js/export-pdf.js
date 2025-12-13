@@ -2,108 +2,131 @@ async function exportPDF() {
   const { jsPDF } = window.jspdf;
   const btn = document.getElementById("btnExport");
   const body = document.body;
-  try {
-    // AKTIFKAN MODE EXPORT
-    body.classList.add("export-pdf");
-    // 1️⃣ Sembunyikan tombol sebelum render
-    btn.style.display = "none";
-    await new Promise(resolve => setTimeout(resolve, 200));
 
-    // Ambil title dan URL halaman
+  try {
+    // MODE EXPORT
+    body.classList.add("export-pdf");
+    btn.style.display = "none";
+    await new Promise(r => setTimeout(r, 150));
+
     const pageTitle = document.title || "Dokumen Web";
     const pageURL = window.location.href;
 
-    // 2️⃣ Render seluruh halaman ke canvas
-    const canvas = await html2canvas(document.body, {
-      scale: window.devicePixelRatio || 2,
-      useCORS: true
+    // RENDER HALAMAN KE CANVAS (OPTIMIZED)
+    const canvas = await html2canvas(body, {
+      scale: 2,          // lebih stabil dari devicePixelRatio
+      useCORS: true,
+      logging: false
     });
 
-    btn.style.display = "inline-block";
-
-    // 3️⃣ Setup PDF A4
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    // SETUP PDF A4
+    const pdf = new jsPDF("p", "mm", "a4");
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const marginTop = 25;    // Margin atas untuk header
-    const marginBottom = 15; // Margin bawah
-    const marginLeft = 10;
-    const marginRight = 10;
+    const margin = {
+      top: 28,
+      bottom: 15,
+      left: 10,
+      right: 10
+    };
 
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-    const pdfWidth = pageWidth - marginLeft - marginRight;
-    const ratio = pdfWidth / canvasWidth;
+    const pdfWidth = pageWidth - margin.left - margin.right;
+    const ratio = pdfWidth / canvas.width;
+
+    const pageCanvasHeight =
+      (pageHeight - margin.top - margin.bottom) / ratio;
 
     let position = 0;
-    const pageContentHeight = (pageHeight - marginTop - marginBottom) / ratio; // pixel per page
-
     let pageNumber = 1;
-    const totalPages = Math.ceil((canvasHeight * ratio) / (pageHeight - marginTop - marginBottom));
+    const totalPages = Math.ceil(canvas.height / pageCanvasHeight);
 
-    while (position < canvasHeight) {
-      const canvasPageHeight = Math.min(pageContentHeight, canvasHeight - position);
+    while (position < canvas.height) {
+      const sliceHeight = Math.min(
+        pageCanvasHeight,
+        canvas.height - position
+      );
 
-      // Canvas sementara untuk memotong halaman
-      const pageCanvas = document.createElement('canvas');
-      pageCanvas.width = canvasWidth;
-      pageCanvas.height = canvasPageHeight;
+      // CANVAS POTONGAN (OPTIMIZED)
+      const pageCanvas = document.createElement("canvas");
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = sliceHeight;
 
-      const pageCtx = pageCanvas.getContext('2d');
-      pageCtx.drawImage(
+      const ctx = pageCanvas.getContext("2d", {
+        willReadFrequently: true
+      });
+
+      ctx.drawImage(
         canvas,
         0,
         position,
-        canvasWidth,
-        canvasPageHeight,
+        canvas.width,
+        sliceHeight,
         0,
         0,
-        canvasWidth,
-        canvasPageHeight
+        canvas.width,
+        sliceHeight
       );
 
-      const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-      const imgPageHeight = canvasPageHeight * ratio;
+      const imgHeight = sliceHeight * ratio;
+      const imgData = pageCanvas.toDataURL("image/jpeg", 0.85);
 
       // HEADER
       pdf.setFontSize(10);
-      pdf.text(`${pageTitle}`, marginLeft, 10);
+      pdf.text(pageTitle, margin.left, 10);
 
       pdf.setFontSize(9);
-      const text = "This document has been automatically generated from the source: ";
-      const textWidth = pdf.getTextWidth(text);
+      pdf.text(
+        "Generated automatically from:",
+        margin.left,
+        18
+      );
 
-      // Tampilkan teks
-      pdf.text(text, marginLeft, 20);
+      pdf.setTextColor(0, 0, 255);
+      pdf.textWithLink(
+        pageURL,
+        margin.left + 45,
+        18,
+        { url: pageURL }
+      );
+      pdf.setTextColor(0, 0, 0);
 
-      // Tambahkan link klikable
-      pdf.setTextColor(0, 0, 255); // biru seperti hyperlink
-      pdf.textWithLink(pageURL, marginLeft + textWidth, 20, { url: pageURL });
-      pdf.setTextColor(0, 0, 0); // kembalikan warna normal
+      // CONTENT
+      pdf.addImage(
+        imgData,
+        "JPEG",
+        margin.left,
+        margin.top,
+        pdfWidth,
+        imgHeight
+      );
 
-      // GAMBAR konten
-      pdf.addImage(imgData, 'JPEG', marginLeft, marginTop, pdfWidth, imgPageHeight);
+      // FOOTER
+      pdf.setFontSize(9);
+      pdf.text(
+        `Page ${pageNumber} of ${totalPages}`,
+        pageWidth / 2,
+        pageHeight - 6,
+        { align: "center" }
+      );
 
-      // FOOTER: halaman
-      pdf.setFontSize(10);
-      pdf.text(`Document ${pageNumber} of ${totalPages}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
-
-      position += canvasPageHeight;
-      if (position < canvasHeight) pdf.addPage();
+      position += sliceHeight;
+      if (position < canvas.height) pdf.addPage();
       pageNumber++;
     }
 
-    // 4️⃣ Simpan PDF
-    pdf.save("Dani-Kardinal-CV.pdf");
+    // SIMPAN
+    pdf.save("Resume-Dani-Kardinal.pdf");
 
-  } catch (error) {
-    console.error("Gagal membuat PDF:", error);
+  } catch (err) {
+    console.error("Export PDF gagal:", err);
+  } finally {
     btn.style.display = "inline-block";
+    body.classList.remove("export-pdf");
   }
 }
 
-// Event listener
-document.getElementById("btnExport").addEventListener("click", exportPDF);
-
-
+// EVENT
+document
+  .getElementById("btnExport")
+  .addEventListener("click", exportPDF);

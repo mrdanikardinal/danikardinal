@@ -531,13 +531,7 @@ function initNodeHeader(selector, options = {}) {
   };
 }
 
-
-
-
-
 // 
-
-
 document.addEventListener("DOMContentLoaded", () => {
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");
@@ -549,7 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 
   const nodeHeader = initNodeHeader("header", {
     nodeCount: 200,
-    speed: 2,
+    speed: 0.5,
     nodeSize: 3,
     nodeColor: "255,255,255", // warna garis tetap hitam
     mouseRadius: 120,
@@ -568,6 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nodeHeader.addNodes(intervalNode);
   }, 1000);
 
+  // 
 });
 
 
