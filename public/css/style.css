@@ -25,8 +25,9 @@ header {
   height: 300px;             /* WAJIB */
   padding: 60px;
   text-align: center;
-  background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
-  color: white;
+  /* background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253)); */
+  background-color: rgb(19, 11, 11);
+  cursor: pointer;
   overflow: hidden;          /* penting */
 }
 

@@ -380,9 +380,9 @@ function initNodeHeader(selector, options = {}) {
 
   const config = {
     nodeCount: options.nodeCount || baseNodeCount,
-    speed: options.speed || 1,
-    nodeSize: options.nodeSize || 2,
-    nodeColor: options.nodeColor || "255,255,255",
+    speed: options.speed || 1.5,
+    nodeSize: options.nodeSize || 3,
+    nodeColor: options.nodeColor || "0,0,0", // default hitam
     mouseRadius: options.mouseRadius || 200,
     lineOpacity: options.lineOpacity || 0.5,
     funnelMaxRadius: options.funnelMaxRadius || 150,
@@ -392,6 +392,7 @@ function initNodeHeader(selector, options = {}) {
   let nodes = [];
   const mouse = { x: null, y: null };
 
+  // Resize canvas
   function resizeCanvas() {
     canvas.width = header.offsetWidth;
     canvas.height = header.offsetHeight;
@@ -399,6 +400,7 @@ function initNodeHeader(selector, options = {}) {
   window.addEventListener("resize", resizeCanvas);
   resizeCanvas();
 
+  // Node class dengan glowing effect
   class Node {
     constructor() {
       this.x = Math.random() * canvas.width;
@@ -406,10 +408,12 @@ function initNodeHeader(selector, options = {}) {
       this.vx = (Math.random() - 0.5) * config.speed;
       this.vy = (Math.random() - 0.5) * config.speed;
       this.size = config.nodeSize;
-      this.opacity = 0; // untuk transisi halus
+      this.opacity = 0;      // transisi muncul
+      this.hue = Math.random() * 360; // warna random
     }
 
     update() {
+      // Gerakan halus
       this.vx += (Math.random() - 0.5) * 0.1;
       this.vy += (Math.random() - 0.5) * 0.1;
       const maxSpeed = config.speed;
@@ -419,10 +423,11 @@ function initNodeHeader(selector, options = {}) {
       this.x += this.vx;
       this.y += this.vy;
 
+      // Pantulan di batas canvas
       if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
       if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
 
-      // Tarikan halus ke mouse
+      // Tarikan halus ke mouse (terompet)
       if (mouse.x !== null) {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
@@ -431,36 +436,52 @@ function initNodeHeader(selector, options = {}) {
         if (dist < config.mouseRadius) {
           const ease = 0.02 + 0.03 * (dist / config.mouseRadius);
           const angle = Math.atan2(dy, dx);
-          const funnelRadius = config.funnelMinRadius + (config.funnelMaxRadius - config.funnelMinRadius) * (dist / config.mouseRadius);
+          const funnelRadius = config.funnelMinRadius +
+            (config.funnelMaxRadius - config.funnelMinRadius) * (dist / config.mouseRadius);
 
           this.x += Math.cos(angle) * funnelRadius * 0.02 + dx * ease;
           this.y += Math.sin(angle) * funnelRadius * 0.02 + dy * ease;
         }
       }
 
-      // Transisi opacity node baru
-      this.opacity += 0.02; // naik perlahan ke 1
+      // Transisi muncul node baru
+      this.opacity += 0.02;
       if (this.opacity > 1) this.opacity = 1;
+
+      // Update hue untuk glowing effect
+      this.hue += Math.random() * 2;
+      if (this.hue > 360) this.hue -= 360;
     }
 
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${config.nodeColor},${this.opacity})`;
+
+      // efek glow
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = `hsl(${this.hue}, 100%, 50%)`;
+      ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.opacity})`;
       ctx.fill();
+
+      // reset shadow agar garis tidak terkena efek glow
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
     }
   }
 
+  // Tambah node baru
   function initNodes(count) {
     for (let i = 0; i < count; i++) {
       nodes.push(new Node());
     }
   }
 
+  // Max distance proporsional
   function getMaxDistance() {
     return baseMaxDistance * Math.sqrt(baseNodeCount / nodes.length);
   }
 
+  // Hubungkan node dengan garis halus
   function connectNodes() {
     const maxDistance = getMaxDistance();
     for (let i = 0; i < nodes.length; i++) {
@@ -470,7 +491,7 @@ function initNodeHeader(selector, options = {}) {
         const dist = Math.hypot(dx, dy);
 
         if (dist < maxDistance) {
-          // gunakan rata-rata opacity kedua node
+          // alpha berdasarkan rata-rata opacity kedua node
           const alpha = ((nodes[i].opacity + nodes[j].opacity) / 2) * (1 - dist / maxDistance) * config.lineOpacity;
           ctx.strokeStyle = `rgba(${config.nodeColor},${alpha})`;
           ctx.beginPath();
@@ -499,14 +520,17 @@ function initNodeHeader(selector, options = {}) {
     mouse.y = null;
   });
 
+  // Inisialisasi node awal
   initNodes(config.nodeCount);
   animate();
 
+  // Return object untuk manipulasi node
   return {
     addNodes: (count) => initNodes(count),
     getNodeCount: () => nodes.length
   };
 }
+
 
 
 
@@ -523,16 +547,16 @@ document.addEventListener("DOMContentLoaded", () => {
   createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 2000 });
   createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 2000 });
   // 
-   const nodeHeader = initNodeHeader("header", {
-    nodeCount: 100,
+  const nodeHeader = initNodeHeader("header", {
+    nodeCount: 200,
     speed: 2,
     nodeSize: 3,
-    nodeColor: "0,0,0", // hitam
-    mouseRadius: 100,
+    nodeColor: "255,255,255", // warna garis tetap hitam
+    mouseRadius: 120,
     lineOpacity: 0.6
   });
 
-  const maxNodes = 800;
+  const maxNodes = 1000;
   const intervalNode = 10;
 
   const timer = setInterval(() => {
