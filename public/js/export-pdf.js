@@ -1,8 +1,10 @@
 async function exportPDF() {
   const { jsPDF } = window.jspdf;
   const btn = document.getElementById("btnExport");
-
+  const body = document.body;
   try {
+    // AKTIFKAN MODE EXPORT
+    body.classList.add("export-pdf");
     // 1️⃣ Sembunyikan tombol sebelum render
     btn.style.display = "none";
     await new Promise(resolve => setTimeout(resolve, 200));
@@ -26,8 +28,8 @@ async function exportPDF() {
 
     const marginTop = 25;    // Margin atas untuk header
     const marginBottom = 15; // Margin bawah
-    const marginLeft = 10;   
-    const marginRight = 10;  
+    const marginLeft = 10;
+    const marginRight = 10;
 
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;

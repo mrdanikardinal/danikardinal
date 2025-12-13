@@ -69,8 +69,7 @@ header {
 }
 
 .text_from_top_img {
-  background-color: #04AA6D;
-  color: white;
+
   font-size: 16px;
   padding: 16px 32px;
 }
@@ -135,6 +134,10 @@ header {
   transition: max-height 0.3s ease;
   padding: 0 20px;
   /* padding atas-bawah dihilangkan dulu */
+}
+/* Nonaktifkan efek visual saat export PDF */
+.export-pdf .panel{
+  box-shadow: none !important;
 }
 
 .panel.show {
@@ -215,6 +218,11 @@ header {
   transition: max-height 0.3s ease;
 
 }
+/* Nonaktifkan efek visual saat export PDF */
+.export-pdf .panel-programming {
+  box-shadow: none !important;
+}
+
 
 .panel-programming.show-programming {
   max-height: 1000px;
@@ -522,7 +530,7 @@ header {
   padding: 20px;
 }
 
-.fakeimgpasphoto {
+.pasphoto {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -544,6 +552,12 @@ footer {
   line-height: 5px; /* untuk teks vertikal center */
   z-index: 999;
 }
+/* Mode export PDF */
+.export-pdf footer {
+  position: static !important; /* ikut flow dokumen */
+  z-index: 0 !important;
+}
+
 
 footer .contact {
   max-width: 800px; /* agar tidak terlalu melebar di layar besar */

@@ -351,7 +351,7 @@ function createImageOverlay(sliders, overlaySelector) {
 const sliders = [
   { wrap: "#slider", class: "mySlides" },
   { wrap: "#slider2", class: "mySlides2" },
-    { wrap: "#slider3", class: "mySlides3" },
+  { wrap: "#slider3", class: "mySlides3" },
   { wrap: "#slider4", class: "mySlides4" }
 ];
 // End Konfigurasi slider untuk overlay
