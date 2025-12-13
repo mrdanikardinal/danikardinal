@@ -39,6 +39,118 @@ function animateSkill(bar) {
   }
   step();
 }
+// smoot achor
+
+
+
+/* =========================
+   SMOOTH SCROLL + ACCORDION
+========================= */
+
+function smoothScrollToAccordion() {
+  const links = document.querySelectorAll('a[href^="#"]');
+
+  links.forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const id = this.getAttribute("href").substring(1);
+      const targetAccordion = document.getElementById(id);
+      if (!targetAccordion) return;
+
+      /* 1. Hapus # dari URL */
+      history.pushState("", document.title, window.location.pathname);
+
+      /* 2. Buka accordion utama */
+      openMainAccordion(targetAccordion);
+
+      /* 3. Scroll smooth ke accordion */
+      setTimeout(() => {
+        targetAccordion.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }, 200);
+    });
+  });
+}
+
+/* =========================
+   BUKA ACCORDION UTAMA
+========================= */
+function openMainAccordion(accordionBtn) {
+  const panel = accordionBtn.nextElementSibling;
+
+  if (!accordionBtn.classList.contains("active")) {
+    accordionBtn.classList.add("active");
+    panel.classList.add("show");
+  }
+
+  /* 4. Buka SEMUA accordion di dalam panel */
+  openInnerAccordions(panel);
+
+  /* 5. Jalankan animasi skill */
+  animateSkills(panel);
+}
+
+/* =========================
+   BUKA ACCORDION DALAM
+========================= */
+function openInnerAccordions(panel) {
+  const innerAccordions = panel.querySelectorAll(".accordion-programming");
+
+  innerAccordions.forEach(btn => {
+    const innerPanel = btn.nextElementSibling;
+    btn.classList.add("active");
+    innerPanel.style.maxHeight = innerPanel.scrollHeight + "px";
+    innerPanel.classList.add("show");
+  });
+}
+
+/* =========================
+   ANIMASI SKILL BAR
+========================= */
+function animateSkills(panel) {
+  const bars = panel.querySelectorAll(".skills");
+  bars.forEach(bar => {
+    bar.style.width = "0%";
+    const text = bar.querySelector(".skill-text");
+    if (text) text.textContent = "0%";
+    animateSkill(bar); // fungsi animasi kamu
+  });
+}
+
+/* =========================
+   AUTO JALAN SAAT PAGE LOAD
+   (jika user buka URL lama
+   dengan #hash)
+========================= */
+window.addEventListener("load", () => {
+  if (window.location.hash) {
+    const id = window.location.hash.substring(1);
+    const accordion = document.getElementById(id);
+    if (accordion) {
+      openMainAccordion(accordion);
+      accordion.scrollIntoView({ behavior: "smooth" });
+
+      history.pushState("", document.title, window.location.pathname);
+    }
+  }
+});
+
+/* =========================
+   INIT
+========================= */
+
+
+
+
+
+
+
+
+
+// end smoot achor open panel
 
 // Hover animasi
 document.querySelectorAll(".skills").forEach((bar) => {
@@ -563,6 +675,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
 
   // 
+  smoothScrollToAccordion();
 });
 
 
