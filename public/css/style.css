@@ -21,11 +21,24 @@ body {
 
 /* Header */
 header {
+  position: relative;        /* WAJIB */
+  height: 300px;             /* WAJIB */
   padding: 60px;
   text-align: center;
   background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253));
   color: white;
+  overflow: hidden;          /* penting */
 }
+
+/* Canvas */
+#nodeCanvas {
+  position: absolute;        /* WAJIB */
+  top: 0;
+  left: 0;
+
+  z-index: 1;
+}
+
 
 /* this is button line for profil photo */
 .container-img {

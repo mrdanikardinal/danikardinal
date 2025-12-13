@@ -357,6 +357,154 @@ const sliders = [
 // End Konfigurasi slider untuk overlay
 
 
+// 
+function initNodeHeader(selector, options = {}) {
+  const header = document.querySelector(selector);
+  if (!header) return;
+
+  // Buat canvas jika belum ada
+  let canvas = document.getElementById("nodeCanvas");
+  if (!canvas) {
+    canvas = document.createElement("canvas");
+    canvas.id = "nodeCanvas";
+    canvas.style.position = "absolute";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.zIndex = "1";
+    header.appendChild(canvas);
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  // Config default + override options
+  const config = {
+    nodeCount: options.nodeCount || 80,
+    maxDistance: options.maxDistance || 120,
+    speed: options.speed || 1,
+    nodeSize: options.nodeSize || 2,
+    nodeColor: options.nodeColor || "255,255,255", // rgb string "R,G,B"
+    mouseRadius: options.mouseRadius || 150,
+    lineOpacity: options.lineOpacity || 0.5
+  };
+
+  let nodes = [];
+  const mouse = { x: null, y: null };
+
+  function resizeCanvas() {
+    canvas.width = header.offsetWidth;
+    canvas.height = header.offsetHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Node {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * config.speed;
+      this.vy = (Math.random() - 0.5) * config.speed;
+      this.size = config.nodeSize;
+    }
+
+    update() {
+      // fluktuasi kecepatan
+      this.vx += (Math.random() - 0.5) * 0.1;
+      this.vy += (Math.random() - 0.5) * 0.1;
+
+      // batasi kecepatan maksimum
+      const maxSpeed = config.speed;
+      this.vx = Math.max(Math.min(this.vx, maxSpeed), -maxSpeed);
+      this.vy = Math.max(Math.min(this.vy, maxSpeed), -maxSpeed);
+
+      // update posisi otomatis
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // pantulan pada border
+      if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
+      if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
+
+      // tarikan halus ke mouse
+      if (mouse.x !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < config.mouseRadius) {
+          const ease = 0.05; // lebih kecil = lebih halus
+          this.x += dx * ease;
+          this.y += dy * ease;
+        }
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgb(${config.nodeColor})`;
+      ctx.fill();
+    }
+  }
+
+  function initNodes() {
+    nodes = [];
+    for (let i = 0; i < config.nodeCount; i++) {
+      nodes.push(new Node());
+    }
+  }
+
+  function connectNodes() {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < config.maxDistance) {
+          const alpha = (1 - dist / config.maxDistance) * config.lineOpacity;
+          ctx.strokeStyle = `rgba(${config.nodeColor},${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    nodes.forEach(node => {
+      node.update();
+      node.draw();
+    });
+
+    connectNodes();
+    requestAnimationFrame(animate);
+  }
+
+  initNodes();
+  animate();
+
+  // Event mouse
+  header.addEventListener("mousemove", e => {
+    const rect = header.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  header.addEventListener("mouseleave", () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+}
+
+
+// 
+
+
 document.addEventListener("DOMContentLoaded", () => {
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");
@@ -365,9 +513,17 @@ document.addEventListener("DOMContentLoaded", () => {
   createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 2000 });
   createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 2000 });
   createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 2000 });
+  // 
+ initNodeHeader("header", {
+    nodeCount: 700,
+    maxDistance: 50,
+    speed: 2,
+    nodeSize: 3,
+    nodeColor: "0,0,0", // hitam
+    mouseRadius: 100,
+    lineOpacity: 0.6
+  });
 
-  //Inisialisasi overlay 
-  createImageOverlay(sliders, "#imgOverlay");
 
 });
 
