@@ -85,28 +85,9 @@ function openMainAccordion(accordionBtn) {
     accordionBtn.classList.add("active");
     panel.classList.add("show");
   }
-
-  /* 4. Buka SEMUA accordion di dalam panel */
-  openInnerAccordions(panel);
-
   /* 5. Jalankan animasi skill */
   animateSkills(panel);
 }
-
-/* =========================
-   BUKA ACCORDION DALAM
-========================= */
-function openInnerAccordions(panel) {
-  const innerAccordions = panel.querySelectorAll(".accordion-programming");
-
-  innerAccordions.forEach(btn => {
-    const innerPanel = btn.nextElementSibling;
-    btn.classList.add("active");
-    innerPanel.style.maxHeight = innerPanel.scrollHeight + "px";
-    innerPanel.classList.add("show");
-  });
-}
-
 /* =========================
    ANIMASI SKILL BAR
 ========================= */
