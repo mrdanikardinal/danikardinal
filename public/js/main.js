@@ -362,7 +362,6 @@ function initNodeHeader(selector, options = {}) {
   const header = document.querySelector(selector);
   if (!header) return;
 
-  // Buat canvas jika belum ada
   let canvas = document.getElementById("nodeCanvas");
   if (!canvas) {
     canvas = document.createElement("canvas");
@@ -376,15 +375,18 @@ function initNodeHeader(selector, options = {}) {
 
   const ctx = canvas.getContext("2d");
 
-  // Config default + override options
+  const baseNodeCount = 80;
+  const baseMaxDistance = 120;
+
   const config = {
-    nodeCount: options.nodeCount || 80,
-    maxDistance: options.maxDistance || 120,
+    nodeCount: options.nodeCount || baseNodeCount,
     speed: options.speed || 1,
     nodeSize: options.nodeSize || 2,
-    nodeColor: options.nodeColor || "255,255,255", // rgb string "R,G,B"
-    mouseRadius: options.mouseRadius || 150,
-    lineOpacity: options.lineOpacity || 0.5
+    nodeColor: options.nodeColor || "255,255,255",
+    mouseRadius: options.mouseRadius || 200,
+    lineOpacity: options.lineOpacity || 0.5,
+    funnelMaxRadius: options.funnelMaxRadius || 150,
+    funnelMinRadius: options.funnelMinRadius || 10
   };
 
   let nodes = [];
@@ -394,7 +396,6 @@ function initNodeHeader(selector, options = {}) {
     canvas.width = header.offsetWidth;
     canvas.height = header.offsetHeight;
   }
-
   window.addEventListener("resize", resizeCanvas);
   resizeCanvas();
 
@@ -405,64 +406,72 @@ function initNodeHeader(selector, options = {}) {
       this.vx = (Math.random() - 0.5) * config.speed;
       this.vy = (Math.random() - 0.5) * config.speed;
       this.size = config.nodeSize;
+      this.opacity = 0; // untuk transisi halus
     }
 
     update() {
-      // fluktuasi kecepatan
       this.vx += (Math.random() - 0.5) * 0.1;
       this.vy += (Math.random() - 0.5) * 0.1;
-
-      // batasi kecepatan maksimum
       const maxSpeed = config.speed;
       this.vx = Math.max(Math.min(this.vx, maxSpeed), -maxSpeed);
       this.vy = Math.max(Math.min(this.vy, maxSpeed), -maxSpeed);
 
-      // update posisi otomatis
       this.x += this.vx;
       this.y += this.vy;
 
-      // pantulan pada border
       if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
       if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
 
-      // tarikan halus ke mouse
+      // Tarikan halus ke mouse
       if (mouse.x !== null) {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const dist = Math.hypot(dx, dy);
 
         if (dist < config.mouseRadius) {
-          const ease = 0.05; // lebih kecil = lebih halus
-          this.x += dx * ease;
-          this.y += dy * ease;
+          const ease = 0.02 + 0.03 * (dist / config.mouseRadius);
+          const angle = Math.atan2(dy, dx);
+          const funnelRadius = config.funnelMinRadius + (config.funnelMaxRadius - config.funnelMinRadius) * (dist / config.mouseRadius);
+
+          this.x += Math.cos(angle) * funnelRadius * 0.02 + dx * ease;
+          this.y += Math.sin(angle) * funnelRadius * 0.02 + dy * ease;
         }
       }
+
+      // Transisi opacity node baru
+      this.opacity += 0.02; // naik perlahan ke 1
+      if (this.opacity > 1) this.opacity = 1;
     }
 
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgb(${config.nodeColor})`;
+      ctx.fillStyle = `rgba(${config.nodeColor},${this.opacity})`;
       ctx.fill();
     }
   }
 
-  function initNodes() {
-    nodes = [];
-    for (let i = 0; i < config.nodeCount; i++) {
+  function initNodes(count) {
+    for (let i = 0; i < count; i++) {
       nodes.push(new Node());
     }
   }
 
+  function getMaxDistance() {
+    return baseMaxDistance * Math.sqrt(baseNodeCount / nodes.length);
+  }
+
   function connectNodes() {
+    const maxDistance = getMaxDistance();
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const dx = nodes[i].x - nodes[j].x;
         const dy = nodes[i].y - nodes[j].y;
         const dist = Math.hypot(dx, dy);
 
-        if (dist < config.maxDistance) {
-          const alpha = (1 - dist / config.maxDistance) * config.lineOpacity;
+        if (dist < maxDistance) {
+          // gunakan rata-rata opacity kedua node
+          const alpha = ((nodes[i].opacity + nodes[j].opacity) / 2) * (1 - dist / maxDistance) * config.lineOpacity;
           ctx.strokeStyle = `rgba(${config.nodeColor},${alpha})`;
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -475,31 +484,31 @@ function initNodeHeader(selector, options = {}) {
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    nodes.forEach(node => {
-      node.update();
-      node.draw();
-    });
-
+    nodes.forEach(node => { node.update(); node.draw(); });
     connectNodes();
     requestAnimationFrame(animate);
   }
 
-  initNodes();
-  animate();
-
-  // Event mouse
   header.addEventListener("mousemove", e => {
     const rect = header.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
   });
-
   header.addEventListener("mouseleave", () => {
     mouse.x = null;
     mouse.y = null;
   });
+
+  initNodes(config.nodeCount);
+  animate();
+
+  return {
+    addNodes: (count) => initNodes(count),
+    getNodeCount: () => nodes.length
+  };
 }
+
+
 
 
 // 
@@ -514,9 +523,8 @@ document.addEventListener("DOMContentLoaded", () => {
   createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 2000 });
   createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 2000 });
   // 
- initNodeHeader("header", {
-    nodeCount: 700,
-    maxDistance: 50,
+   const nodeHeader = initNodeHeader("header", {
+    nodeCount: 100,
     speed: 2,
     nodeSize: 3,
     nodeColor: "0,0,0", // hitam
@@ -524,6 +532,17 @@ document.addEventListener("DOMContentLoaded", () => {
     lineOpacity: 0.6
   });
 
+  const maxNodes = 800;
+  const intervalNode = 10;
+
+  const timer = setInterval(() => {
+    const currentCount = nodeHeader.getNodeCount();
+    if (currentCount >= maxNodes) {
+      clearInterval(timer);
+      return;
+    }
+    nodeHeader.addNodes(intervalNode);
+  }, 1000);
 
 });
 
