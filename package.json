@@ -1,0 +1,15 @@
+{
+  "name": "danikardinal",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "vite": "^7.2.7",
+    "vite-plugin-html": "^4.0.0",
+    "cssnano": "^6.0.1",
+    "gh-pages": "^5.0.0"
+  }
+}
