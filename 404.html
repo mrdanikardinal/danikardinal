@@ -15,6 +15,7 @@
       color: #fff;
     }
 
+    /* Stars */
     .stars {
       width: 100%;
       height: 100%;
@@ -35,13 +36,14 @@
       to { opacity: 1; }
     }
 
+    /* Countdown & message */
     .message {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      z-index: 3;
+      z-index: 5;
     }
     .message h1 {
       font-size: 80px;
@@ -55,14 +57,46 @@
       color: #fff;
     }
 
+    /* Planet styles */
     .planet {
       position: absolute;
       border-radius: 50%;
       opacity: 0.9;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
       transform-origin: center center;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
     }
+
+    /* Saturn Ring */
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 215, 0, 0.6);
+      transform: rotate(25deg);
+      pointer-events: none;
+    }
+
+    /* Asteroid */
+    .asteroid {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #ccc;
+      border-radius: 50%;
+      opacity: 0.8;
+      z-index: 2;
+    }
+
+    /* Meteor */
+    .meteor {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff;
+      z-index: 2;
+    }
+
   </style>
 </head>
 <body>
@@ -71,60 +105,106 @@
   <div class="message">
     <h1>404</h1>
     <p>Halaman tidak ditemukan</p>
-    <p>Redirect ke Home dalam <span id="countdown">5</span> detik...</p>
+    <p>Redirect ke Home dalam <span id="countdown">120</span> detik...</p>
   </div>
 
   <script>
-    const ROOT_PATH = "/danikardinal/"; // Sesuaikan dengan repo
-    const REDIRECT_TIME = 60; // detik
+    const ROOT_PATH = "/danikardinal/"; // Sesuaikan repo kamu
+    const REDIRECT_TIME = 120; // detik
     let countdown = REDIRECT_TIME;
 
-    // Bintang acak
+    // Stars
     const starsContainer = document.getElementById("stars");
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 200; i++) {
       const star = document.createElement("div");
       star.className = "star";
       star.style.width = star.style.height = (Math.random()*3 + 1) + "px";
       star.style.top = Math.random() * window.innerHeight + "px";
       star.style.left = Math.random() * window.innerWidth + "px";
-      star.style.animationDuration = (Math.random()*3 + 1) + "s";
+      star.style.animationDuration = (Math.random()*3 + 2) + "s";
       starsContainer.appendChild(star);
     }
 
-    // Matahari
-    function createPlanet(name, size, color, orbitRadius, duration) {
+    // Planet creator
+    function createPlanet(name, size, color, orbitRadius, duration, glow=false, ring=false) {
       const planet = document.createElement("div");
       planet.className = "planet";
       planet.style.width = planet.style.height = size + "px";
       planet.style.background = color;
-      planet.style.top = `50%`;
-      planet.style.left = `50%`;
+      if(glow) planet.style.boxShadow = `0 0 ${size/2}px ${color}`;
+      planet.style.top = "50%";
+      planet.style.left = "50%";
       planet.style.margin = `-${size/2}px 0 0 -${size/2}px`;
       planet.style.animationName = `orbit-${name}`;
       planet.style.animationDuration = duration + "s";
+      planet.style.animationIterationCount = "infinite";
+      planet.style.animationTimingFunction = "linear";
       document.body.appendChild(planet);
 
+      // Saturn ring
+      if(ring){
+        const ringEl = document.createElement("div");
+        ringEl.className = "ring";
+        ringEl.style.width = (size*2) + "px";
+        ringEl.style.height = (size*0.6) + "px";
+        ringEl.style.top = "50%";
+        ringEl.style.left = "50%";
+        ringEl.style.margin = `-${(size*0.3)}px 0 0 -${size}px`;
+        document.body.appendChild(ringEl);
+      }
+
+      // Keyframes orbit
       const style = document.createElement('style');
       style.innerHTML = `
         @keyframes orbit-${name} {
-          from { transform: rotate(0deg) translateX(${orbitRadius}px) rotate(0deg);}
-          to { transform: rotate(360deg) translateX(${orbitRadius}px) rotate(-360deg);}
+          0% { transform: rotate(0deg) translateX(${orbitRadius}px) rotate(0deg);}
+          100% { transform: rotate(360deg) translateX(${orbitRadius}px) rotate(-360deg);}
         }
       `;
       document.head.appendChild(style);
     }
 
-    // Membuat semua planet
-    createPlanet("sun", 80, "yellow", 0, 0); // Matahari diam di tengah
-    createPlanet("mercury", 8, "#b1b1b1", 100, 10);
-    createPlanet("venus", 14, "#e0c37f", 140, 18);
-    createPlanet("earth", 16, "#3c80c9", 180, 24);
-    createPlanet("mars", 12, "#c1440e", 220, 30);
-    createPlanet("jupiter", 30, "#d9a066", 280, 50);
-    createPlanet("saturn", 26, "#e3d0a6", 340, 60);
-    createPlanet("uranus", 20, "#7fffd4", 400, 80);
-    createPlanet("neptune", 20, "#4169e1", 460, 100);
-    createPlanet("pluto", 6, "#c2b8b0", 500, 120);
+    // Create all planets
+    createPlanet("sun", 80, "yellow", 0, 0, true);
+    createPlanet("mercury", 8, "#b1b1b1", 100, 10, true);
+    createPlanet("venus", 14, "#e0c37f", 140, 18, true);
+    createPlanet("earth", 16, "#3c80c9", 180, 24, true);
+    createPlanet("mars", 12, "#c1440e", 220, 30, true);
+    createPlanet("jupiter", 30, "#d9a066", 280, 50, true);
+    createPlanet("saturn", 26, "#e3d0a6", 340, 60, true, true); // Ring Saturn
+    createPlanet("uranus", 20, "#7fffd4", 400, 80, true);
+    createPlanet("neptune", 20, "#4169e1", 460, 100, true);
+    createPlanet("pluto", 6, "#c2b8b0", 500, 120, true);
+
+    // Asteroids
+    for(let i=0;i<50;i++){
+      const a = document.createElement("div");
+      a.className="asteroid";
+      a.style.top=Math.random()*window.innerHeight+"px";
+      a.style.left=Math.random()*window.innerWidth+"px";
+      document.body.appendChild(a);
+    }
+
+    // Meteors
+    function spawnMeteor(){
+      const m = document.createElement("div");
+      m.className = "meteor";
+      m.style.top = Math.random()*window.innerHeight + "px";
+      m.style.left = "-10px";
+      document.body.appendChild(m);
+      let x = -10;
+      const speed = 4 + Math.random()*4;
+      const id = setInterval(()=>{
+        x += speed;
+        m.style.left = x + "px";
+        m.style.top = parseFloat(m.style.top) + speed/2 + "px";
+        if(x>window.innerWidth){
+          clearInterval(id);
+          m.remove();
+        }
+      },16);
+    }
+    setInterval(spawnMeteor, 1000);
 
     // Countdown timer
     const countdownElement = document.getElementById("countdown");
@@ -136,7 +216,6 @@
         window.location.replace(ROOT_PATH);
       }
     }, 1000);
-
   </script>
 </body>
 </html>
