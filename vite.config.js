@@ -2,13 +2,12 @@ import { defineConfig } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
 export default defineConfig({
-  base: 'https://mrdanikardinal.github.io/danikardinal/', // sesuaikan dengan GitHub Pages repo
-  publicDir: 'public',
+  base: '/danikardinal/',
   plugins: [
     createHtmlPlugin({
       minify: {
         collapseWhitespace: true,
-        removeComments: true,  // hapus komentar HTML
+        removeComments: true,
         minifyCSS: true,
         minifyJS: true,
       },
@@ -17,10 +16,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    minify: 'terser',  // minify JS
+    minify: 'terser',
+    terserOptions: {
+      format: { comments: false },
+    },
     rollupOptions: {
       output: {
-        // optional: hash file names untuk cache busting
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
