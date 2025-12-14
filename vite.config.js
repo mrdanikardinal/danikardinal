@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
 export default defineConfig({
-  base: '/danikardinal/', // sesuaikan dengan GitHub Pages repo
+  base: 'https://mrdanikardinal.github.io/danikardinal/', // sesuaikan dengan GitHub Pages repo
   publicDir: 'public',
   plugins: [
     createHtmlPlugin({
