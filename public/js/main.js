@@ -319,8 +319,6 @@ function createImageOverlay(sliders, overlaySelector) {
 
     overlay.appendChild(downloadBtn);
   }
-
-
   let currentSlider = null;
   let currentIndex = 0;
   let slidesArray = [];
@@ -601,8 +599,9 @@ function forceRootPage() {
 }
 
 
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Force Redirect Root Page
+  // Force Redirect Root Page
   forceRootPage();
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");

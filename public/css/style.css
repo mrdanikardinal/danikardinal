@@ -21,35 +21,23 @@ body {
 
 /* Header */
 header {
-  position: relative;        /* WAJIB */
-  height: 400px;             /* WAJIB */
+  position: relative;
+  height: 400px;
   padding: 60px;
   text-align: center;
   /* background-image: linear-gradient(to left, rgb(124, 238, 191), rgb(126, 156, 253)); */
   background-color: rgb(19, 11, 11);
   cursor: pointer;
-  overflow: hidden;          /* penting */
+  overflow: hidden;
 }
 
-/* Canvas */
+/* header canvas */
 #nodeCanvas {
-  position: absolute;        /* WAJIB */
+  position: absolute;
   top: 0;
   left: 0;
-
   z-index: 1;
 }
-
-
-/* this is button line for profil photo */
-.container-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-
-}
-
 
 .image {
   opacity: 1;
@@ -88,8 +76,7 @@ header {
   padding: 16px 32px;
 }
 
-/* End this is button line for profil photo */
-/* Start accordion */
+/*accordion */
 .accordion {
   background-color: #eee;
   color: #444;
@@ -124,7 +111,6 @@ header {
 
 .active:after {
   content: "\2796";
-
   /* minus */
 }
 
@@ -149,8 +135,9 @@ header {
   padding: 0 20px;
   /* padding atas-bawah dihilangkan dulu */
 }
+
 /* Nonaktifkan efek visual saat export PDF */
-.export-pdf .panel{
+.export-pdf .panel {
   box-shadow: none !important;
 }
 
@@ -160,6 +147,7 @@ header {
   padding: 20px;
 }
 
+/* accordion programming */
 .accordion-programming {
   background-color: #eee;
   color: #444;
@@ -183,8 +171,6 @@ header {
   font-weight: bold;
 }
 
-
-/* IKON KIRI - Float ke Kiri */
 .accordion-programming::before {
   content: '\1F4C1';
   /* 📁 Folder */
@@ -192,10 +178,8 @@ header {
   /* Kunci ke sisi Kiri */
   margin-right: 10px;
   padding-top: 2px;
-  /* Kadang perlu tweak manual agar sejajar teks */
 }
 
-/* IKON KANAN - Float ke Kanan */
 .accordion-programming::after {
   content: '\02795';
   /* ➕ Plus */
@@ -205,7 +189,6 @@ header {
   font-size: 13px;
   margin-left: 5px;
   padding-top: 2px;
-  /* Tweak manual posisi vertikal */
 }
 
 .accordion-programming:hover {
@@ -215,23 +198,23 @@ header {
   font-weight: bold;
 }
 
-/* IKON KANAN - Saat Active, ubah menjadi Minus */
 .accordion-programming.active::after {
   content: '\2796';
   /* ➖ Minus (atau '\2212' untuk tanda kurang sederhana) */
 }
 
+/* panel programming */
 .panel-programming {
   background-image: linear-gradient(to right, rgb(167, 235, 161), rgb(195, 234, 250));
   overflow: hidden;
   margin-bottom: 15px;
   box-shadow: 10px 10px 5px rgb(164, 172, 173);
   border-radius: 0px 0px 16px 16px;
-  /* --- Transition Smooth --- */
   max-height: 0;
   transition: max-height 0.3s ease;
 
 }
+
 /* Nonaktifkan efek visual saat export PDF */
 .export-pdf .panel-programming {
   box-shadow: none !important;
@@ -244,7 +227,6 @@ header {
   padding: 20px;
 }
 
-/* End accordion */
 /*  this is button line for skill */
 .skills {
   width: 0%;
@@ -260,7 +242,6 @@ header {
 .skill-text {
   position: absolute;
   right: -50px;
-  /* Menempatkan teks sedikit di luar bar (di sebelah kanan) */
   text-align: end;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -325,9 +306,7 @@ header {
   background-color: #089c00;
 }
 
-/* end color programming */
 /* color data structures and algorithms */
-
 .linux {
   width: 50%;
   background-color: #a004c7;
@@ -394,10 +373,6 @@ header {
   background-color: #2908afc2;
 }
 
-
-
-
-/* end color data structures and algorithms */
 /* color frameworks and libraries */
 .springboot {
   width: 50%;
@@ -490,11 +465,6 @@ header {
   background-color: red;
 }
 
-/* end color  databases SQL and noSQL */
-
-/* End this is button line for skill */
-
-
 /* Top navigation bar */
 .navbar {
   display: flex;
@@ -511,21 +481,17 @@ header {
   background: none;
   border: none;
   cursor: pointer;
-  font: inherit; /* penting agar font sama */
+  font: inherit;
 }
 
 /* hover effect */
 .navbar a:hover,
 .navbar button:hover {
-  background-image: linear-gradient(
-    to left,
-    rgb(124, 238, 191),
-    rgb(126, 156, 253)
-  );
+  background-image: linear-gradient(to left,
+      rgb(124, 238, 191),
+      rgb(126, 156, 253));
   color: black;
 }
-
-
 /* Column container */
 .container {
   display: flex;
@@ -547,11 +513,71 @@ header {
   padding: 20px;
 }
 
-/* Fake image, just for this example */
-.fakeimg {
-  background-color: #aaa;
+/* baranimate start */
+.baranimate {
+  background-color: var(--primary-bg-color, black);
   width: 100%;
+  height: 60px;
+  /* dikasih sedikit tinggi supaya goyangan kelihatan */
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 28px;
+  font-weight: bold;
+  color: yellow;
+  position: absolute;
+  white-space: nowrap;
+
+  text-shadow: 0 0 2px #fff, 0 0 6px #fff, 0 0 12px yellow;
+
+  animation-name: moveSmooth;
+  animation-duration: calc(var(--speed, 50s) + var(--gap, 1s));
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* smooth animate baranimate */
+@keyframes moveSmooth {
+  0% {
+    transform: translateX(-150%) translateY(0);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  /* Meluncur sambil goyangan vertikal */
+  25% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+
+  50% {
+    transform: translateX(0%) translateY(5px);
+  }
+
+  75% {
+    transform: translateX(50%) translateY(-3px);
+  }
+
+  95% {
+    transform: translateX(100%) translateY(0);
+    opacity: 1;
+  }
+
+  97% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(100%) translateY(0);
+    opacity: 0;
+  }
 }
 
 .pasphoto {
@@ -560,8 +586,6 @@ header {
   margin-right: auto;
   width: 50%;
 }
-
-
 
 /* Footer */
 footer {
@@ -572,20 +596,21 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 60px; /* tinggi footer */
-  line-height: 5px; /* untuk teks vertikal center */
+  height: 60px;
+  line-height: 5px;
   z-index: 999;
 }
+
 /* Mode export PDF */
 .export-pdf footer {
-  position: static !important; /* ikut flow dokumen */
+  position: static !important;
   z-index: 0 !important;
 }
 
 
 footer .contact {
-  max-width: 800px; /* agar tidak terlalu melebar di layar besar */
-  margin: 0 auto;   /* center di tengah footer */
+  max-width: 800px;
+  margin: 0 auto;
   margin-top: 10px;
 }
 
@@ -599,6 +624,7 @@ footer .contact p {
   margin-top: 12px;
   font-size: 14px;
 }
+
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
 
@@ -616,9 +642,6 @@ footer .contact p {
     display: none !important;
   }
 }
-
-
-
 /* Start Slideshow container */
 .slideshow-container {
   position: relative;
@@ -631,7 +654,7 @@ footer .contact p {
 .slideshow-container .prev,
 .slideshow-container .next {
   opacity: 0;
-  pointer-events: none;   
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
@@ -650,13 +673,19 @@ footer .contact p {
 }
 
 /* Slide */
-.mySlides,.mySlides2,.mySlides3,.mySlides4 {
+.mySlides,
+.mySlides2,
+.mySlides3,
+.mySlides4 {
   min-width: 100%;
   box-sizing: border-box;
 }
 
 /* Gambar */
-.mySlides img,.mySlides2 img,.mySlides3 img,.mySlides4 img {
+.mySlides img,
+.mySlides2 img,
+.mySlides3 img,
+.mySlides4 img {
   display: block;
   width: 100%;
   height: auto;
@@ -667,17 +696,17 @@ footer .contact p {
 .prev,
 .next {
   position: absolute;
-  top: 50%; 
-  transform: translateY(-50%); 
+  top: 50%;
+  transform: translateY(-50%);
   padding: 12px;
   color: #fff;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 4px;
   cursor: pointer;
-  font-size: 90px; 
+  font-size: 90px;
   user-select: none;
-  z-index: 50; 
-  pointer-events: auto; 
+  z-index: 50;
+  pointer-events: auto;
 }
 
 /* Tombol prev di kiri */
@@ -689,6 +718,7 @@ footer .contact p {
 .next {
   right: 8px;
 }
+
 /* On hover */
 .prev:hover,
 .next:hover {
@@ -699,7 +729,7 @@ footer .contact p {
 .text {
   color: #f2f2f2;
   background-color: #04AA6D;
-  font-size:large;
+  font-size: large;
   font-weight: bold;
   text-align: center;
   padding-top: 10px;
@@ -718,16 +748,15 @@ footer .contact p {
   padding: 8px 12px;
   position: absolute;
   top: 0;
-  white-space: nowrap;   
+  white-space: nowrap;
 
 }
-/* End Slideshow container */
-/* Overlay fullscreen */
+
 /* Overlay fullscreen */
 .img-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.85);
   display: none;
   justify-content: center;
   align-items: center;
@@ -783,45 +812,58 @@ footer .contact p {
   z-index: 10;
 }
 
-.overlayPrev { left: 40px; }
-.overlayNext { right: 40px; }
+.overlayPrev {
+  left: 40px;
+}
 
-.overlayPrev:hover, .overlayNext:hover {
+.overlayNext {
+  right: 40px;
+}
+
+.overlayPrev:hover,
+.overlayNext:hover {
   color: #ddd;
 }
-
-
-
-/* End Overlay fullscreen */
-
-
+/* media screen responsive */
 @media screen and (min-width: 250px) and (max-width: 500px) {
-  .prev, .next {
+
+  .prev,
+  .next {
     padding: 8px;
-    font-size: 30px; /* sesuaikan ukuran font pada perangkat kecil */
+    font-size: 30px;
     position: absolute;
   }
 }
+
 @media screen and (min-width: 501px) and (max-width: 700px) {
-  .prev, .next {
+
+  .prev,
+  .next {
     padding: 8px;
-    font-size: 40px; /* sesuaikan ukuran font pada perangkat kecil */
+    font-size: 40px;
+    /* sesuaikan ukuran font pada perangkat kecil */
     position: absolute;
   }
 }
+
 @media screen and (min-width: 701px) and (max-width: 800px) {
-  .prev, .next {
+
+  .prev,
+  .next {
     padding: 8px;
-    font-size: 50px; /* sesuaikan ukuran font pada perangkat kecil */
+    font-size: 50px;
+    /* sesuaikan ukuran font pada perangkat kecil */
     position: absolute;
   }
 }
+
 @media screen and (min-width: 801px) and (max-width: 1000px) {
-  .prev, .next {
+
+  .prev,
+  .next {
     padding: 8px;
-    font-size: 70px; /* sesuaikan ukuran font pada perangkat kecil */
+    font-size: 70px;
+    /* sesuaikan ukuran font pada perangkat kecil */
     position: absolute;
   }
 }
-
-
