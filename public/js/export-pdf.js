@@ -3,18 +3,29 @@ async function exportPDF() {
   const btn = document.getElementById("btnExport");
   const body = document.body;
 
+  // Ambil semua ikon untuk freeze/restore animasi
+  const icons = document.querySelectorAll(".icon");
+
   try {
     // MODE EXPORT
     body.classList.add("export-pdf");
     btn.style.display = "none";
     await new Promise(r => setTimeout(r, 150));
 
+    // ✅ Freeze posisi animasi bintang
+    icons.forEach(icon => {
+      const style = window.getComputedStyle(icon);
+      const matrix = style.transform; // ambil posisi transform terakhir
+      icon.style.transform = matrix;
+      icon.style.animation = "none"; // matikan animasi sementara
+    });
+
     const pageTitle = document.title || "Dokumen Web";
     const pageURL = window.location.href;
 
     // RENDER HALAMAN KE CANVAS (OPTIMIZED)
     const canvas = await html2canvas(body, {
-      scale: 2,          // lebih stabil dari devicePixelRatio
+      scale: 2,          
       useCORS: true,
       logging: false
     });
@@ -52,9 +63,7 @@ async function exportPDF() {
       pageCanvas.width = canvas.width;
       pageCanvas.height = sliceHeight;
 
-      const ctx = pageCanvas.getContext("2d", {
-        willReadFrequently: true
-      });
+      const ctx = pageCanvas.getContext("2d", { willReadFrequently: true });
 
       ctx.drawImage(
         canvas,
@@ -121,8 +130,14 @@ async function exportPDF() {
   } catch (err) {
     console.error("Export PDF gagal:", err);
   } finally {
+    // Restore tombol & kelas export
     btn.style.display = "inline-block";
     body.classList.remove("export-pdf");
+
+    // ✅ Restore animasi bintang
+    icons.forEach(icon => {
+      icon.style.animation = ""; // kembalikan ke CSS asli
+    });
   }
 }
 
