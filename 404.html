@@ -25,17 +25,18 @@
 </head>
 <body>
 <div class="stars" id="stars"></div>
-<div class="message">
+<div class="message" style="top:auto; bottom:20px; left:50%; transform:translateX(-50%); text-align:center;">
   <h1>404</h1>
   <p>Halaman tidak ditemukan</p>
-  <p>Redirect ke Home dalam <span id="countdown">5</span> detik...</p>
+  <p>Redirect ke Home dalam <span id="countdown">120</span> detik...</p>
 </div>
+
 <div class="tooltip" id="tooltip"></div>
 <div class="popup" id="popup"></div>
 
 <script>
 const ROOT_PATH="/danikardinal/";
-const REDIRECT_TIME=5;
+const REDIRECT_TIME=120;
 let countdown=REDIRECT_TIME;
 
 // Generate Stars
