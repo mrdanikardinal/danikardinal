@@ -587,8 +587,26 @@ function initNodeHeader(selector, options = {}) {
     getNodeCount: () => nodes.length
   };
 }
+// ForceRootPage
+function forceRootPage() {
+  const rootPath = "/";
+
+  if (
+    window.location.pathname !== rootPath ||
+    window.location.search !== "" ||
+    window.location.hash !== ""
+  ) {
+    window.location.replace(
+      window.location.origin + rootPath
+    );
+  }
+}
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Force Redirect Root Page
+  forceRootPage();
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");
   // Inisialisasi slider
@@ -619,8 +637,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
   // --- Inisialisasi overlay ---
   createImageOverlay(sliders, "#imgOverlay");
-  // 
+  // SmoothScrool
   smoothScrollToAccordion();
+
 });
 
 
