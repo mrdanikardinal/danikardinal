@@ -6,9 +6,6 @@ import '../css/style.css';
 // Import script lain
 import './export-pdf.js';
 
-// Contoh kode JS
-console.log('Production-ready build!');
-
 const animationState = new WeakMap();
 function animateSkill(bar) {
   const target = parseInt(bar.dataset.progress || 0);
