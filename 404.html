@@ -1,13 +1,123 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Redirecting...</title>
+  <meta charset="UTF-8">
+  <title>404 - Halaman Tidak Ditemukan</title>
+  <style>
+    /* Full screen background gelap */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      background: radial-gradient(ellipse at bottom, #0b0c2b 0%, #000000 100%);
+      color: #fff;
+    }
+
+    /* Bintang-bintang */
+    .stars {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
+    /* Planet / tata surya */
+    .planet {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.9;
+      animation: orbit linear infinite;
+    }
+
+    /* Pesan 404 */
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 2;
+    }
+    .message h1 {
+      font-size: 80px;
+      margin: 0;
+      color: #ffd700;
+      text-shadow: 0 0 20px #ffd700;
+    }
+    .message p {
+      font-size: 24px;
+      margin-top: 10px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="message">
+    <h1>404</h1>
+    <p>Halaman tidak ditemukan<br>Redirecting to Home...</p>
+  </div>
 
   <script>
-    // Redirect semua URL tidak dikenal ke root
-       window.location.replace("/danikardinal/");
+    const ROOT_PATH = "/danikardinal/"; // Sesuaikan dengan repo kamu
+
+    // Membuat bintang acak
+    const starsContainer = document.getElementById("stars");
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.width = star.style.height = (Math.random()*3 + 1) + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (Math.random()*3 + 1) + "s";
+      starsContainer.appendChild(star);
+    }
+
+    // Tambahkan planet sederhana
+    const planet = document.createElement("div");
+    planet.className = "planet";
+    planet.style.width = planet.style.height = "60px";
+    planet.style.background = "radial-gradient(circle, #ff4500, #800000)";
+    planet.style.top = "30%";
+    planet.style.left = "10%";
+    planet.style.animationDuration = "20s";
+    planet.style.animationName = "orbit";
+    planet.style.animationIterationCount = "infinite";
+    planet.style.animationTimingFunction = "linear";
+    document.body.appendChild(planet);
+
+    // Animasi orbit planet
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes orbit {
+        0% { transform: rotate(0deg) translateX(300px) rotate(0deg);}
+        100% { transform: rotate(360deg) translateX(300px) rotate(-360deg);}
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Redirect ke root setelah 5 detik
+    setTimeout(() => {
+      window.location.replace(ROOT_PATH);
+    }, 10000);
   </script>
-</head>
-<body></body>
+</body>
 </html>
