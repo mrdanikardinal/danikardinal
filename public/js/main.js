@@ -39,14 +39,7 @@ function animateSkill(bar) {
   }
   step();
 }
-// smoot achor
-
-
-
-/* =========================
-   SMOOTH SCROLL + ACCORDION
-========================= */
-
+// SmoothScrool
 function smoothScrollToAccordion() {
   const links = document.querySelectorAll('a[href^="#"]');
 
@@ -74,10 +67,7 @@ function smoothScrollToAccordion() {
     });
   });
 }
-
-/* =========================
-   BUKA ACCORDION UTAMA
-========================= */
+// OpenMainAccordion
 function openMainAccordion(accordionBtn) {
   const panel = accordionBtn.nextElementSibling;
 
@@ -88,24 +78,17 @@ function openMainAccordion(accordionBtn) {
   /* 5. Jalankan animasi skill */
   animateSkills(panel);
 }
-/* =========================
-   ANIMASI SKILL BAR
-========================= */
+// animateSkill
 function animateSkills(panel) {
   const bars = panel.querySelectorAll(".skills");
   bars.forEach(bar => {
     bar.style.width = "0%";
     const text = bar.querySelector(".skill-text");
     if (text) text.textContent = "0%";
-    animateSkill(bar); // fungsi animasi kamu
+    animateSkill(bar);
   });
 }
-
-/* =========================
-   AUTO JALAN SAAT PAGE LOAD
-   (jika user buka URL lama
-   dengan #hash)
-========================= */
+// Automation Run While Call URL root/path
 window.addEventListener("load", () => {
   if (window.location.hash) {
     const id = window.location.hash.substring(1);
@@ -118,20 +101,6 @@ window.addEventListener("load", () => {
     }
   }
 });
-
-/* =========================
-   INIT
-========================= */
-
-
-
-
-
-
-
-
-
-// end smoot achor open panel
 
 // Hover animasi
 document.querySelectorAll(".skills").forEach((bar) => {
@@ -166,7 +135,6 @@ function setupAccordion(selector, panelClass) {
     });
   });
 }
-// End Accordion
 // Start Slider
 function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySlides", interval = 4000 }) {
   const wrap = document.querySelector(container);
@@ -309,7 +277,6 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
     startAutoplay();
   });
 }
-// End Slider
 // Start Overlay Image Zoom
 function createImageOverlay(sliders, overlaySelector) {
   const overlay = document.querySelector(overlaySelector);
@@ -439,17 +406,15 @@ function createImageOverlay(sliders, overlaySelector) {
 
   return { openOverlay, overlayNextImg, overlayPrevImg, closeOverlayFunc };
 }
-// End Overlay Image Zoom
-// Start Konfigurasi slider untuk overlay
+// Konfigurasi slider untuk overlay
 const sliders = [
   { wrap: "#slider", class: "mySlides" },
   { wrap: "#slider2", class: "mySlides2" },
   { wrap: "#slider3", class: "mySlides3" },
   { wrap: "#slider4", class: "mySlides4" }
 ];
-// End Konfigurasi slider untuk overlay
 
-// 
+// InitNode In Header
 function initNodeHeader(selector, options = {}) {
   const header = document.querySelector(selector);
   if (!header) return;
@@ -652,7 +617,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     nodeHeader.addNodes(intervalNode);
   }, 1000);
-
+  // --- Inisialisasi overlay ---
+  createImageOverlay(sliders, "#imgOverlay");
   // 
   smoothScrollToAccordion();
 });
