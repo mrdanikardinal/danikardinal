@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>404 - Halaman Tidak Ditemukan</title>
   <style>
-    /* Full screen background gelap */
     body, html {
       margin: 0;
       padding: 0;
@@ -16,11 +15,9 @@
       color: #fff;
     }
 
-    /* Bintang-bintang */
     .stars {
       width: 100%;
       height: 100%;
-      background: transparent;
       position: absolute;
       top: 0;
       left: 0;
@@ -38,7 +35,6 @@
       to { opacity: 1; }
     }
 
-    /* Planet / tata surya */
     .planet {
       position: absolute;
       border-radius: 50%;
@@ -46,7 +42,6 @@
       animation: orbit linear infinite;
     }
 
-    /* Pesan 404 */
     .message {
       position: absolute;
       top: 50%;
@@ -73,13 +68,16 @@
 
   <div class="message">
     <h1>404</h1>
-    <p>Halaman tidak ditemukan<br>Redirecting to Home...</p>
+    <p>Halaman tidak ditemukan</p>
+    <p>Redirect ke Home dalam <span id="countdown">5</span> detik...</p>
   </div>
 
   <script>
     const ROOT_PATH = "/danikardinal/"; // Sesuaikan dengan repo kamu
+    const REDIRECT_TIME = 5; // detik
+    let countdown = REDIRECT_TIME;
 
-    // Membuat bintang acak
+    // Bintang acak
     const starsContainer = document.getElementById("stars");
     for (let i = 0; i < 100; i++) {
       const star = document.createElement("div");
@@ -91,7 +89,7 @@
       starsContainer.appendChild(star);
     }
 
-    // Tambahkan planet sederhana
+    // Planet sederhana
     const planet = document.createElement("div");
     planet.className = "planet";
     planet.style.width = planet.style.height = "60px";
@@ -114,10 +112,16 @@
     `;
     document.head.appendChild(style);
 
-    // Redirect ke root setelah 5 detik
-    setTimeout(() => {
-      window.location.replace(ROOT_PATH);
-    }, 10000);
+    // Countdown timer
+    const countdownElement = document.getElementById("countdown");
+    const interval = setInterval(() => {
+      countdown--;
+      countdownElement.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(interval);
+        window.location.replace(ROOT_PATH);
+      }
+    }, 1000);
   </script>
 </body>
 </html>
