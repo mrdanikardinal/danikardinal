@@ -10,7 +10,7 @@
   .star { position:absolute; background:white; border-radius:50%; opacity:0.8; animation:twinkle 2s infinite alternate; }
   @keyframes twinkle { from{opacity:0.3;} to{opacity:1;} }
 
-  .message { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center; z-index:5; }
+  .message { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); text-align:center; z-index:5; }
   .message h1 { font-size:80px; margin:0; color:#ffd700; text-shadow:0 0 20px #ffd700; }
   .message p { font-size:24px; margin-top:10px; }
 
@@ -25,7 +25,8 @@
 </head>
 <body>
 <div class="stars" id="stars"></div>
-<div class="message" style="top:auto; bottom:20px; left:50%; transform:translateX(-50%); text-align:center;">
+
+<div class="message">
   <h1>404</h1>
   <p>Halaman tidak ditemukan</p>
   <p>Redirect ke Home dalam <span id="countdown">120</span> detik...</p>
@@ -55,18 +56,18 @@ for(let i=0;i<250;i++){
 const tooltip=document.getElementById("tooltip");
 const popup=document.getElementById("popup");
 
-// Planet Data (orbit scale: 1 unit = 1 pixel, bisa disesuaikan)
+// Planet Data (orbit scale & ukuran diperbesar)
 const planetsData=[
-  {name:"Sun",size:80,color:"yellow",a:0,b:0,speed:0,radius:0},
-  {name:"Mercury",size:6,color:"#b1b1b1",a:100,b:90,speed:0.03,distance:57.9},
-  {name:"Venus",size:12,color:"#e0c37f",a:140,b:120,speed:0.024,distance:108.2},
-  {name:"Earth",size:14,color:"#3c80c9",a:180,b:160,speed:0.02,distance:149.6},
-  {name:"Mars",size:10,color:"#c1440e",a:220,b:200,speed:0.016,distance:227.9},
-  {name:"Jupiter",size:28,color:"#d9a066",a:280,b:260,speed:0.012,distance:778.5},
-  {name:"Saturn",size:24,color:"#e3d0a6",a:340,b:300,speed:0.01,distance:1434,ring:true},
-  {name:"Uranus",size:18,color:"#7fffd4",a:400,b:360,speed:0.008,distance:2871},
-  {name:"Neptune",size:18,color:"#4169e1",a:460,b:420,speed:0.006,distance:4495},
-  {name:"Pluto",size:5,color:"#c2b8b0",a:500,b:480,speed:0.004,distance:5906}
+  {name:"Sun",size:120,color:"orange",a:0,b:0,speed:0,radius:0}, // Matahari lebih besar dan orange-merah
+  {name:"Mercury",size:10,color:"#b1b1b1",a:120,b:110,speed:0.03,distance:57.9},
+  {name:"Venus",size:16,color:"#e0c37f",a:170,b:150,speed:0.024,distance:108.2},
+  {name:"Earth",size:18,color:"#3c80c9",a:220,b:200,speed:0.02,distance:149.6},
+  {name:"Mars",size:14,color:"#c1440e",a:270,b:240,speed:0.016,distance:227.9},
+  {name:"Jupiter",size:40,color:"#d9a066",a:340,b:300,speed:0.012,distance:778.5},
+  {name:"Saturn",size:34,color:"#e3d0a6",a:410,b:360,speed:0.01,distance:1434,ring:true},
+  {name:"Uranus",size:26,color:"#7fffd4",a:480,b:420,speed:0.008,distance:2871},
+  {name:"Neptune",size:26,color:"#4169e1",a:550,b:480,speed:0.006,distance:4495},
+  {name:"Pluto",size:8,color:"#c2b8b0",a:620,b:580,speed:0.004,distance:5906}
 ];
 
 const planets=[];
@@ -83,6 +84,7 @@ planetsData.forEach(p=>{
   planet.style.boxShadow=`0 0 ${p.size/2}px ${p.color}, inset -${p.size/4}px -${p.size/4}px 15px rgba(0,0,0,0.6)`;
   document.body.appendChild(planet);
 
+  // Hanya buat ring untuk Saturnus
   if(p.ring){
     const ring=document.createElement("div");
     ring.className="ring";
@@ -129,7 +131,7 @@ function animatePlanets(){
     const y=window.innerHeight/2 + p.b*Math.sin(p.angle) - p.element.offsetHeight/2;
     p.element.style.left=x+"px";
     p.element.style.top=y+"px";
-    // Dynamic shading based on angle (simulate light from Sun)
+    // Dynamic shading based on angle
     const light=Math.cos(p.angle)*0.5 +0.5;
     p.element.style.boxShadow=`0 0 ${p.element.offsetWidth/2}px ${p.element.style.backgroundColor}, inset -${p.element.offsetWidth/4}px -${p.element.offsetWidth/4}px ${15*light}px rgba(0,0,0,0.6)`;
   });
