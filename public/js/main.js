@@ -589,19 +589,16 @@ function initNodeHeader(selector, options = {}) {
 }
 // ForceRootPage
 function forceRootPage() {
-  const rootPath = "/";
+  const ROOT_PATH = "/danikardinal/";
 
   if (
-    window.location.pathname !== rootPath ||
-    window.location.search !== "" ||
-    window.location.hash !== ""
+    window.location.pathname !== ROOT_PATH ||
+    window.location.search ||
+    window.location.hash
   ) {
-    window.location.replace(
-      window.location.origin + rootPath
-    );
+    window.history.replaceState(null, "", ROOT_PATH);
   }
 }
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
