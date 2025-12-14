@@ -35,20 +35,13 @@
       to { opacity: 1; }
     }
 
-    .planet {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.9;
-      animation: orbit linear infinite;
-    }
-
     .message {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      z-index: 2;
+      z-index: 3;
     }
     .message h1 {
       font-size: 80px;
@@ -61,6 +54,15 @@
       margin-top: 10px;
       color: #fff;
     }
+
+    .planet {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.9;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      transform-origin: center center;
+    }
   </style>
 </head>
 <body>
@@ -68,18 +70,18 @@
 
   <div class="message">
     <h1>404</h1>
-    <p>UPPSSS!!!Sepertinya Kamu Tersesat,Halaman Tidak Di Temukan</p>
-    <p>Akan Aku Bantu Kembali Ke Bumi: Dalam Hitungan Mundur<span id="countdown">20</span> detik...</p>
+    <p>Halaman tidak ditemukan</p>
+    <p>Redirect ke Home dalam <span id="countdown">5</span> detik...</p>
   </div>
 
   <script>
-    const ROOT_PATH = "/danikardinal/"; // Sesuaikan dengan repo kamu
-    const REDIRECT_TIME = 20; // detik
+    const ROOT_PATH = "/danikardinal/"; // Sesuaikan dengan repo
+    const REDIRECT_TIME = 60; // detik
     let countdown = REDIRECT_TIME;
 
     // Bintang acak
     const starsContainer = document.getElementById("stars");
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 150; i++) {
       const star = document.createElement("div");
       star.className = "star";
       star.style.width = star.style.height = (Math.random()*3 + 1) + "px";
@@ -89,28 +91,40 @@
       starsContainer.appendChild(star);
     }
 
-    // Planet sederhana
-    const planet = document.createElement("div");
-    planet.className = "planet";
-    planet.style.width = planet.style.height = "60px";
-    planet.style.background = "radial-gradient(circle, #ff4500, #800000)";
-    planet.style.top = "30%";
-    planet.style.left = "10%";
-    planet.style.animationDuration = "20s";
-    planet.style.animationName = "orbit";
-    planet.style.animationIterationCount = "infinite";
-    planet.style.animationTimingFunction = "linear";
-    document.body.appendChild(planet);
+    // Matahari
+    function createPlanet(name, size, color, orbitRadius, duration) {
+      const planet = document.createElement("div");
+      planet.className = "planet";
+      planet.style.width = planet.style.height = size + "px";
+      planet.style.background = color;
+      planet.style.top = `50%`;
+      planet.style.left = `50%`;
+      planet.style.margin = `-${size/2}px 0 0 -${size/2}px`;
+      planet.style.animationName = `orbit-${name}`;
+      planet.style.animationDuration = duration + "s";
+      document.body.appendChild(planet);
 
-    // Animasi orbit planet
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes orbit {
-        0% { transform: rotate(0deg) translateX(300px) rotate(0deg);}
-        100% { transform: rotate(360deg) translateX(300px) rotate(-360deg);}
-      }
-    `;
-    document.head.appendChild(style);
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes orbit-${name} {
+          from { transform: rotate(0deg) translateX(${orbitRadius}px) rotate(0deg);}
+          to { transform: rotate(360deg) translateX(${orbitRadius}px) rotate(-360deg);}
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Membuat semua planet
+    createPlanet("sun", 80, "yellow", 0, 0); // Matahari diam di tengah
+    createPlanet("mercury", 8, "#b1b1b1", 100, 10);
+    createPlanet("venus", 14, "#e0c37f", 140, 18);
+    createPlanet("earth", 16, "#3c80c9", 180, 24);
+    createPlanet("mars", 12, "#c1440e", 220, 30);
+    createPlanet("jupiter", 30, "#d9a066", 280, 50);
+    createPlanet("saturn", 26, "#e3d0a6", 340, 60);
+    createPlanet("uranus", 20, "#7fffd4", 400, 80);
+    createPlanet("neptune", 20, "#4169e1", 460, 100);
+    createPlanet("pluto", 6, "#c2b8b0", 500, 120);
 
     // Countdown timer
     const countdownElement = document.getElementById("countdown");
@@ -122,6 +136,7 @@
         window.location.replace(ROOT_PATH);
       }
     }, 1000);
+
   </script>
 </body>
 </html>
