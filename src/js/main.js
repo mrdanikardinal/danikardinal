@@ -611,7 +611,7 @@ function forceRootPage() {
  */
 async function downloadCoverLetter(key, workerUrl) {
   // Minta password via prompt
-  const password = prompt("Masukkan password untuk download cover letter:");
+  const password = prompt("Masukkan password untuk download cover letter:").trim();
 
   if (!password) {
     alert("Download dibatalkan.");
