@@ -603,6 +603,56 @@ function forceRootPage() {
     window.history.replaceState(null, "", ROOT_PATH);
   }
 }
+// Download Cover letter From Worker Cloudflare function
+/**
+ * Fungsi untuk download cover letter dari Worker
+ * @param {string} key - Nama file JSON di repo (tanpa .json)
+ * @param {string} workerUrl - URL Worker Cloudflare
+ */
+async function downloadCoverLetter(key, workerUrl) {
+  // Minta password via prompt
+  const password = prompt("Masukkan password untuk download cover letter:");
+
+  if (!password) {
+    alert("Download dibatalkan.");
+    return;
+  }
+
+  try {
+    const res = await fetch(workerUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${password}`
+      },
+      body: JSON.stringify({ key })
+    });
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        alert("Password salah! Tidak bisa mendownload.");
+      } else if (res.status === 404) {
+        alert("File cover letter tidak ditemukan.");
+      } else {
+        alert(`Terjadi error: ${res.status}`);
+      }
+      return;
+    }
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "cover_letter.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+
+  } catch (err) {
+    console.error(err);
+    alert("Terjadi error saat menghubungi server.");
+  }
+}
+
 
 
 
@@ -641,6 +691,14 @@ document.addEventListener("DOMContentLoaded", () => {
   createImageOverlay(sliders, "#imgOverlay");
   // SmoothScrool
   smoothScrollToAccordion();
+
+  // inisiasi download cover latter 
+  const btn = document.getElementById("btnDownloadCoverLetter");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      downloadCoverLetter("cover_letter_1", "https://pdf-generator.danikardinal75.workers.dev");
+    });
+  }
 
 });
 
