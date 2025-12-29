@@ -678,11 +678,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Klik tombol Cover-Letter
   openBtn.addEventListener("click", function () {
-    const userKey = prompt("Masukkan kata kuncinya:"); // minta kata kunci via popup
+    const userKey = prompt(""); // minta kata kunci via popup
     if (userKey === correctKey) {
       modal.style.display = "block"; // tampilkan modal
     } else {
-      alert("Kata kunci salah!"); // alert jika salah
+      alert(""); // alert jika salah
     }
   });
 
