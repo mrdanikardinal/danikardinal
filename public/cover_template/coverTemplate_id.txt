@@ -1,0 +1,10 @@
+Kepada {company},
+
+Saya tertarik melamar posisi {position} sebagaimana diumumkan pada {date}. Dengan pengalaman lebih dari 13 tahun sebagai Broadcast Engineer dan programmer freelance sejak 2017, saya terbiasa memecahkan masalah kompleks, mengotomatisasi workflow, dan mengembangkan solusi software untuk operasional yang efisien.
+
+Sebagai programmer freelance, saya telah berhasil membuat program desktop, aplikasi web, dan mobile Android. Pengalaman ini, dikombinasikan dengan proyek upgrade sistem, optimisasi jaringan, dan integrasi software di bidang broadcast, memperkuat kemampuan coding, debugging, dan adaptasi teknologi baru.
+
+Saya antusias untuk membawa pengalaman teknis dan programming saya ke {company} dan berkontribusi pada pengembangan software inovatif. Saya berharap dapat berdiskusi lebih lanjut mengenai bagaimana saya bisa mendukung tim Anda.
+
+Hormat saya,
+{name}

@@ -1,10 +1,10 @@
 // Start Accordion
 // Menyimpan state animasi tiap bar
 // Import CSS supaya Vite bisa minify & hapus komentar
-import '../css/style.css';
+import "../css/style.css";
 
 // Import script lain
-import './export-pdf.js';
+import "./export-pdf.js";
 
 const animationState = new WeakMap();
 function animateSkill(bar) {
@@ -49,7 +49,7 @@ function animateSkill(bar) {
 function smoothScrollToAccordion() {
   const links = document.querySelectorAll('a[href^="#"]');
 
-  links.forEach(link => {
+  links.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
 
@@ -67,7 +67,7 @@ function smoothScrollToAccordion() {
       setTimeout(() => {
         targetAccordion.scrollIntoView({
           behavior: "smooth",
-          block: "start"
+          block: "start",
         });
       }, 200);
     });
@@ -87,7 +87,7 @@ function openMainAccordion(accordionBtn) {
 // animateSkill
 function animateSkills(panel) {
   const bars = panel.querySelectorAll(".skills");
-  bars.forEach(bar => {
+  bars.forEach((bar) => {
     bar.style.width = "0%";
     const text = bar.querySelector(".skill-text");
     if (text) text.textContent = "0%";
@@ -142,7 +142,11 @@ function setupAccordion(selector, panelClass) {
   });
 }
 // Start Slider
-function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySlides", interval = 4000 }) {
+function createRobustSeamlessSlider({
+  container = "#slider",
+  slideClass = "mySlides",
+  interval = 4000,
+}) {
   const wrap = document.querySelector(container);
   if (!wrap) return;
 
@@ -158,7 +162,7 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
   // helper: wait for all images to load
   function waitImagesLoad() {
     const imgs = Array.from(slidesWrapper.querySelectorAll("img"));
-    const promises = imgs.map(img => {
+    const promises = imgs.map((img) => {
       if (img.complete && img.naturalWidth !== 0) return Promise.resolve();
       return new Promise((res) => {
         img.addEventListener("load", res);
@@ -169,7 +173,6 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
   }
 
   waitImagesLoad().then(() => {
-
     // clone head & tail
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[slides.length - 1].cloneNode(true);
@@ -194,7 +197,8 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
 
       // restore transition safely via RAF
       requestAnimationFrame(() => {
-        slidesWrapper.style.transition = prevTransition || "transform 0.8s ease";
+        slidesWrapper.style.transition =
+          prevTransition || "transform 0.8s ease";
       });
     }
     // Move to slide with animation
@@ -270,7 +274,6 @@ function createRobustSeamlessSlider({ container = "#slider", slideClass = "mySli
     window.addEventListener("resize", () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-
         isTransitioning = false;
         disableButtons(false);
 
@@ -292,7 +295,6 @@ function createImageOverlay(sliders, overlaySelector) {
   const overlayPrev = overlay.querySelector(".overlayPrev");
   const overlayNext = overlay.querySelector(".overlayNext");
   const closeOverlay = overlay.querySelector(".closeOverlay");
-
 
   //Tambahkan tombol download
   let downloadBtn = overlay.querySelector(".downloadOverlay");
@@ -333,7 +335,7 @@ function createImageOverlay(sliders, overlaySelector) {
     currentSlider = sliderID;
     currentIndex = index;
 
-    const slideSel = sliders.find(s => s.wrap === sliderID)?.class;
+    const slideSel = sliders.find((s) => s.wrap === sliderID)?.class;
     slidesArray = Array.from(
       document.querySelector(sliderID).querySelectorAll("." + slideSel)
     );
@@ -379,7 +381,9 @@ function createImageOverlay(sliders, overlaySelector) {
   }
 
   function overlayPrevImg() {
-    fadeOverlayImage((currentIndex - 1 + slidesArray.length) % slidesArray.length);
+    fadeOverlayImage(
+      (currentIndex - 1 + slidesArray.length) % slidesArray.length
+    );
   }
 
   function closeOverlayFunc() {
@@ -415,7 +419,7 @@ const sliders = [
   { wrap: "#slider", class: "mySlides" },
   { wrap: "#slider2", class: "mySlides2" },
   { wrap: "#slider3", class: "mySlides3" },
-  { wrap: "#slider4", class: "mySlides4" }
+  { wrap: "#slider4", class: "mySlides4" },
 ];
 
 // InitNode In Header
@@ -447,7 +451,7 @@ function initNodeHeader(selector, options = {}) {
     mouseRadius: options.mouseRadius || 200,
     lineOpacity: options.lineOpacity || 0.5,
     funnelMaxRadius: options.funnelMaxRadius || 150,
-    funnelMinRadius: options.funnelMinRadius || 10
+    funnelMinRadius: options.funnelMinRadius || 10,
   };
 
   let nodes = [];
@@ -469,7 +473,7 @@ function initNodeHeader(selector, options = {}) {
       this.vx = (Math.random() - 0.5) * config.speed;
       this.vy = (Math.random() - 0.5) * config.speed;
       this.size = config.nodeSize;
-      this.opacity = 0;      // transisi muncul
+      this.opacity = 0; // transisi muncul
       this.hue = Math.random() * 360; // warna random
     }
 
@@ -497,8 +501,10 @@ function initNodeHeader(selector, options = {}) {
         if (dist < config.mouseRadius) {
           const ease = 0.02 + 0.03 * (dist / config.mouseRadius);
           const angle = Math.atan2(dy, dx);
-          const funnelRadius = config.funnelMinRadius +
-            (config.funnelMaxRadius - config.funnelMinRadius) * (dist / config.mouseRadius);
+          const funnelRadius =
+            config.funnelMinRadius +
+            (config.funnelMaxRadius - config.funnelMinRadius) *
+              (dist / config.mouseRadius);
 
           this.x += Math.cos(angle) * funnelRadius * 0.02 + dx * ease;
           this.y += Math.sin(angle) * funnelRadius * 0.02 + dy * ease;
@@ -553,7 +559,10 @@ function initNodeHeader(selector, options = {}) {
 
         if (dist < maxDistance) {
           // alpha berdasarkan rata-rata opacity kedua node
-          const alpha = ((nodes[i].opacity + nodes[j].opacity) / 2) * (1 - dist / maxDistance) * config.lineOpacity;
+          const alpha =
+            ((nodes[i].opacity + nodes[j].opacity) / 2) *
+            (1 - dist / maxDistance) *
+            config.lineOpacity;
           ctx.strokeStyle = `rgba(${config.nodeColor},${alpha})`;
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -566,12 +575,15 @@ function initNodeHeader(selector, options = {}) {
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    nodes.forEach(node => { node.update(); node.draw(); });
+    nodes.forEach((node) => {
+      node.update();
+      node.draw();
+    });
     connectNodes();
     requestAnimationFrame(animate);
   }
 
-  header.addEventListener("mousemove", e => {
+  header.addEventListener("mousemove", (e) => {
     const rect = header.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
@@ -588,7 +600,7 @@ function initNodeHeader(selector, options = {}) {
   // Return object untuk manipulasi node
   return {
     addNodes: (count) => initNodes(count),
-    getNodeCount: () => nodes.length
+    getNodeCount: () => nodes.length,
   };
 }
 // ForceRootPage
@@ -603,58 +615,6 @@ function forceRootPage() {
     window.history.replaceState(null, "", ROOT_PATH);
   }
 }
-// Download Cover letter From Worker Cloudflare function
-/**
- * Fungsi untuk download cover letter dari Worker
- * @param {string} key - Nama file JSON di repo (tanpa .json)
- * @param {string} workerUrl - URL Worker Cloudflare
- */
-async function downloadCoverLetter(key, workerUrl) {
-  // Minta password via prompt
-  const password = prompt("Masukkan password untuk download cover letter:").trim();
-
-  if (!password) {
-    alert("Download dibatalkan.");
-    return;
-  }
-
-  try {
-    const res = await fetch(workerUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${password}`
-      },
-      body: JSON.stringify({ key })
-    });
-
-    if (!res.ok) {
-      if (res.status === 401) {
-        alert("Password salah! Tidak bisa mendownload.");
-      } else if (res.status === 404) {
-        alert("File cover letter tidak ditemukan.");
-      } else {
-        alert(`Terjadi error: ${res.status}`);
-      }
-      return;
-    }
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "cover_letter.pdf";
-    a.click();
-    URL.revokeObjectURL(url);
-
-  } catch (err) {
-    console.error(err);
-    alert("Terjadi error saat menghubungi server.");
-  }
-}
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   // Force Redirect Root Page
@@ -662,18 +622,34 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAccordion(".accordion", "show");
   setupAccordion(".accordion-programming", "show-programming");
   // Inisialisasi slider
-  createRobustSeamlessSlider({ container: "#slider", slideClass: "mySlides", interval: 4000 });
-  createRobustSeamlessSlider({ container: "#slider2", slideClass: "mySlides2", interval: 4000 });
-  createRobustSeamlessSlider({ container: "#slider3", slideClass: "mySlides3", interval: 4000 });
-  createRobustSeamlessSlider({ container: "#slider4", slideClass: "mySlides4", interval: 4000 });
-  // 
+  createRobustSeamlessSlider({
+    container: "#slider",
+    slideClass: "mySlides",
+    interval: 4000,
+  });
+  createRobustSeamlessSlider({
+    container: "#slider2",
+    slideClass: "mySlides2",
+    interval: 4000,
+  });
+  createRobustSeamlessSlider({
+    container: "#slider3",
+    slideClass: "mySlides3",
+    interval: 4000,
+  });
+  createRobustSeamlessSlider({
+    container: "#slider4",
+    slideClass: "mySlides4",
+    interval: 4000,
+  });
+  //
   const nodeHeader = initNodeHeader("header", {
     nodeCount: 200,
     speed: 0.5,
     nodeSize: 3,
     nodeColor: "255,255,255", // warna garis tetap hitam
     mouseRadius: 120,
-    lineOpacity: 0.6
+    lineOpacity: 0.6,
   });
 
   const maxNodes = 1000;
@@ -692,22 +668,236 @@ document.addEventListener("DOMContentLoaded", () => {
   // SmoothScrool
   smoothScrollToAccordion();
 
-  // inisiasi download cover latter 
-  const btn = document.getElementById("btnDownloadCoverLetter");
-  if (btn) {
-    btn.addEventListener("click", () => {
-      downloadCoverLetter("cover_letter_1", "https://pdf-generator.danikardinal75.workers.dev");
-    });
-  }
+  // cover letter
+  const modal = document.getElementById("coverModal");
+  const openBtn = document.getElementById("openModalBtn");
+  const closeBtn = document.querySelector(".close");
 
+  // Kata kunci yang benar
+  const correctKey = "whoamiandyou";
+
+  // Klik tombol Cover-Letter
+  openBtn.addEventListener("click", function () {
+    const userKey = prompt("Masukkan kata kuncinya:"); // minta kata kunci via popup
+    if (userKey === correctKey) {
+      modal.style.display = "block"; // tampilkan modal
+    } else {
+      alert("Kata kunci salah!"); // alert jika salah
+    }
+  });
+
+  // Tutup modal saat klik "x"
+  closeBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // Tutup modal saat klik di luar modal
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // --- Form Submission ---
+  document.getElementById("coverForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const langSelect = document.getElementById("selectLang");
+    const lang = langSelect ? langSelect.value : "en"; // baca dari select
+
+    const rawDate = document.getElementById("inputDate").value; // misal "2025-12-28"
+    const formattedDate = formatDate(rawDate, lang); // panggil fungsi formatDate
+
+    const data = {
+      company: document.getElementById("inputCompany").value,
+      position: document.getElementById("inputPosition").value,
+      date: formattedDate, // gunakan tanggal yang sudah diformat
+      name: document.getElementById("inputName").value,
+    };
+
+    await generateStyledPDF(data, lang);
+    modal.style.display = "none";
+    e.target.reset();
+  });
 });
 
+// --- Load template lokal ---
+async function loadTemplateLocal(filename) {
+  try {
+    const path = `${import.meta.env.BASE_URL}cover_template/${filename}`;
+    const res = await fetch(path);
 
+    if (!res.ok) throw new Error("Gagal load template");
+    return await res.text();
+  } catch (err) {
+    console.error("Load template error:", err);
+    return "";
+  }
+}
 
+// --- Fill template ---
+function fillTemplate(template, data) {
+  return template
+    .replace(/{company}/g, data.company)
+    .replace(/{position}/g, data.position)
+    .replace(/{date}/g, data.date)
+    .replace(/{name}/g, data.name);
+}
+// --- Generate PDF dengan desain ---
+async function generateStyledPDF(data, lang = "en") {
+  const templatePath =
+    lang === "id" ? "coverTemplate_id.txt" : "coverTemplate_en.txt";
+  const template = await loadTemplateLocal(templatePath);
+  if (!template) return alert("Template gagal dimuat.");
 
+  const filledText = fillTemplate(template, data);
 
+  const pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
 
+  // --- HEADER ---
+  pdf.setFillColor(0, 102, 204);
+  pdf.rect(0, 0, pageWidth, 20, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setTextColor(255, 255, 255);
+  pdf.setFontSize(16);
+  pdf.text(`Cover Letter - ${data.name}`, pageWidth / 2, 14, {
+    align: "center",
+  });
 
+  // --- BODY ---
+  pdf.setFont("times", "normal");
+  pdf.setTextColor(0, 0, 0);
+  pdf.setFontSize(12);
 
+  const margin = 20;
+  const lineHeight = 7;
+  const paragraphIndent = 7; // mm
+  let y = 30;
 
+  const paragraphs = filledText.split("\n\n");
+  paragraphs.forEach((paragraph, idx) => {
+    const words = paragraph.split(" ");
+    let lineWords = [];
+    let isFirstLine = true;
 
+    // tandai paragraf pertama atau paragraf penutup
+    const isNoIndent =
+      idx === 0 ||
+      idx === paragraphs.length - 1 ||
+      paragraph.trim().startsWith("Sincerely");
+
+    words.forEach((word) => {
+      const testWidth = pdf.getTextWidth(
+        lineWords.join(" ") + (lineWords.length ? " " : "") + word
+      );
+      const availableWidth =
+        pageWidth -
+        margin * 2 -
+        (isFirstLine && !isNoIndent ? paragraphIndent : 0);
+
+      if (testWidth > availableWidth) {
+        // tulis baris penuh dengan justify
+        writeJustifiedLine(
+          pdf,
+          lineWords,
+          y,
+          margin,
+          pageWidth - margin,
+          isFirstLine && !isNoIndent ? paragraphIndent : 0
+        );
+        y += lineHeight;
+        lineWords = [word];
+        isFirstLine = false;
+      } else {
+        lineWords.push(word);
+      }
+    });
+
+    // tulis baris terakhir paragraf (rata kiri)
+    if (lineWords.length > 0) {
+      pdf.text(
+        lineWords.join(" "),
+        margin + (isFirstLine && !isNoIndent ? paragraphIndent : 0),
+        y
+      );
+      y += lineHeight;
+    }
+
+    y += lineHeight; // spasi antar paragraf
+    if (y > pageHeight - 30) {
+      pdf.addPage();
+      y = margin;
+    }
+  });
+
+  // --- FOOTER ---
+  pdf.setDrawColor(0, 0, 0);
+  pdf.setLineWidth(0.5);
+  pdf.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
+  pdf.setFontSize(10);
+  pdf.text(`Generated on: ${data.date}`, margin, pageHeight - 15);
+
+  pdf.save(`${data.company}_${data.position}_CoverLetter.pdf`);
+}
+// --- FUNGSI UNTUK JUSTIFY ---
+function writeJustifiedLine(pdf, words, y, xStart, xEnd, paragraphIndent) {
+  const wordsCount = words.length;
+  if (wordsCount === 1) {
+    pdf.text(words[0], xStart + paragraphIndent, y);
+    return;
+  }
+
+  const wordsWidth = words.reduce((sum, w) => sum + pdf.getTextWidth(w), 0);
+  const spaceWidth =
+    (xEnd - xStart - paragraphIndent - wordsWidth) / (wordsCount - 1);
+
+  let x = xStart + paragraphIndent;
+  words.forEach((word) => {
+    pdf.text(word, x, y);
+    x += pdf.getTextWidth(word) + spaceWidth;
+  });
+}
+// format date
+function formatDate(dateStr, lang = "en") {
+  const dateParts = dateStr.split("-"); // ["YYYY","MM","DD"]
+  const year = dateParts[0];
+  const monthIndex = parseInt(dateParts[1], 10) - 1;
+  const day = parseInt(dateParts[2], 10);
+
+  if (lang === "id") {
+    const monthsID = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+    return `${day} ${monthsID[monthIndex]} ${year}`;
+  } else {
+    // bahasa Inggris: December 28, 2025
+    const monthsEN = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return `${monthsEN[monthIndex]} ${day}, ${year}`;
+  }
+}

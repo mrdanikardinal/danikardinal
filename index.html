@@ -30,7 +30,7 @@
     <a href="#android_developer">Android Developer</a>
     <a href="#java_developer">Java Developer</a>
     <button id="btnExport" class="no-print">Web Export To PDF </button>
-    <button id="btnDownloadCoverLetter" class="no-print">Cover-Letter</button>
+    <button id="openModalBtn" class="no-print">Cover Letter</button>
 
   </div>
 
@@ -903,7 +903,25 @@
       <a class="overlayNext">&#10095;</a>
     </div>
 
+ 
+    <!-- Modal -->
+    <div id="coverModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="coverForm">
+          <input id="inputCompany" placeholder="Company" required>
+          <input id="inputPosition" placeholder="Position" required>
+          <input id="inputDate" type="date" required>
+          <input id="inputName" placeholder="Your Name" required>
+          <select id="selectLang">
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+          </select>
+          <button type="submit">Generate PDF</button>
+        </form>
 
+      </div>
+    </div>
 
     <!-- Library -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>

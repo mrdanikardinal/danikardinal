@@ -1,6 +1,8 @@
 async function exportPDF() {
   const { jsPDF } = window.jspdf;
   const btn = document.getElementById("btnExport");
+  const btn2 = document.getElementById("openModalBtn");
+
   const body = document.body;
 
   // Ambil semua ikon untuk freeze/restore animasi
@@ -10,6 +12,8 @@ async function exportPDF() {
     // MODE EXPORT
     body.classList.add("export-pdf");
     btn.style.display = "none";
+    btn2.style.display = "none";
+
     await new Promise(r => setTimeout(r, 150));
 
     // ✅ Freeze posisi animasi bintang
@@ -132,6 +136,8 @@ async function exportPDF() {
   } finally {
     // Restore tombol & kelas export
     btn.style.display = "inline-block";
+    btn2.style.display = "inline-block";
+
     body.classList.remove("export-pdf");
 
     // ✅ Restore animasi bintang
