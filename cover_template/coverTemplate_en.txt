@@ -1,0 +1,10 @@
+Dear {company},
+
+I am excited to apply for the {position} position as advertised on {date}. With over 13 years of experience as a Broadcast Engineer and working as a freelance programmer since 2017, I am skilled at solving complex problems, automating workflows, and developing software solutions for efficient operations.
+
+As a freelance programmer, I have successfully developed desktop applications, web applications, and Android mobile apps. This experience, combined with leading system upgrades, network optimization, and software integration projects in the broadcast field, has strengthened my coding, debugging, and adaptability skills.
+
+I am enthusiastic about bringing my technical experience and programming skills to {company} and contributing to the development of innovative software. I would welcome the opportunity to discuss how I can support your team in achieving its goals.
+
+Sincerely,
+{name}
