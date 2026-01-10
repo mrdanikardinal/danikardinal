@@ -837,8 +837,8 @@ async function generateStyledPDF(data, lang = "en") {
   pdf.setLineWidth(0.5);
   pdf.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
   pdf.setFontSize(10);
-  pdf.text(`Generated on: ${data.date}`, margin, pageHeight - 15);
-
+  // Jika ingin selalu tanggal sekarang
+  pdf.text(`Generated on: ${formatDate(new Date(), lang)}`, margin, pageHeight - 15);
   pdf.save(`${data.company}_${data.position}_CoverLetter.pdf`);
 }
 // --- FUNGSI UNTUK JUSTIFY ---
@@ -860,11 +860,23 @@ function writeJustifiedLine(pdf, words, y, xStart, xEnd, paragraphIndent) {
   });
 }
 // format date
-function formatDate(dateStr, lang = "en") {
-  const dateParts = dateStr.split("-"); // ["YYYY","MM","DD"]
-  const year = dateParts[0];
-  const monthIndex = parseInt(dateParts[1], 10) - 1;
-  const day = parseInt(dateParts[2], 10);
+function formatDate(dateInput = new Date(), lang = "en") {
+  let year, monthIndex, day;
+
+  // Jika input berupa string "YYYY-MM-DD"
+  if (typeof dateInput === "string") {
+    const dateParts = dateInput.split("-"); // ["YYYY","MM","DD"]
+    year = dateParts[0];
+    monthIndex = parseInt(dateParts[1], 10) - 1;
+    day = parseInt(dateParts[2], 10);
+  } else if (dateInput instanceof Date) {
+    // Jika input berupa objek Date
+    year = dateInput.getFullYear();
+    monthIndex = dateInput.getMonth();
+    day = dateInput.getDate();
+  } else {
+    throw new Error("Invalid date input");
+  }
 
   if (lang === "id") {
     const monthsID = [
@@ -883,7 +895,6 @@ function formatDate(dateStr, lang = "en") {
     ];
     return `${day} ${monthsID[monthIndex]} ${year}`;
   } else {
-    // bahasa Inggris: December 28, 2025
     const monthsEN = [
       "January",
       "February",
@@ -901,3 +912,4 @@ function formatDate(dateStr, lang = "en") {
     return `${monthsEN[monthIndex]} ${day}, ${year}`;
   }
 }
+
