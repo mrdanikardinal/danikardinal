@@ -1,15 +1,3 @@
-{name}
-Deparis residence
-Bogor, 16320
-danikardinal75@gmail.com|+6281903400753
-January 25, 2026.
-
-Hiring Team
-{Company}
-1 Stars Avenue
-Singapore 138507
-Tel: (65) 6333 3888
-
 Dear Hiring Team at {company},
 
 I am excited to apply for the {position} position as advertised, with applications closing on {date}. With over 13 years of experience as a Broadcast Engineer and working as a freelance programmer since 2017, I am skilled at solving complex problems, automating workflows, and developing software solutions to support efficient operations.

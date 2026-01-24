@@ -756,31 +756,11 @@ async function generateStyledPDF(data, lang = "en") {
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
-  // // --- HEADER ---
-  // pdf.setFillColor(0, 102, 204);
-  // pdf.rect(0, 0, pageWidth, 20, "F");
-  // pdf.setFont("helvetica", "bold");
-  // pdf.setTextColor(255, 255, 255);
-  // pdf.setFontSize(16);
-  // pdf.text(`Cover Letter - ${data.name}`, pageWidth / 2, 14, {
-  //   align: "center",
-  // });
-
-  // --- HEADER ---
+// --- HEADER ---
   pdf.setFillColor(0, 102, 204);
   pdf.rect(0, 0, pageWidth, 20, "F");
-
-  // HEADER KIRI ATAS (surat)
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(10);
   pdf.setTextColor(255, 255, 255);
-
-  pdf.text(data.company, 10, 8); // pojok kiri atas
-  pdf.setFont("helvetica", "normal");
-  pdf.text(data.companyAddress || "", 10, 13);
-
-  // JUDUL TETAP DI TENGAH (existing function tidak hilang)
-  pdf.setFont("helvetica", "bold");
   pdf.setFontSize(16);
   pdf.text(`Cover Letter - ${data.name}`, pageWidth / 2, 14, {
     align: "center",
