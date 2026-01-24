@@ -1,9 +1,8 @@
 {name}
-{Deparis residence}
-{Bogor, 16320}
-{danikardinal75@gmail.com} | {+6281903400753}
-
-{Date}
+Deparis residence
+Bogor, 16320
+danikardinal75@gmail.com|+6281903400753
+January 25, 2026.
 
 Hiring Team
 {Company}
