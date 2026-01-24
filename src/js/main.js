@@ -645,7 +645,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //
   const nodeHeader = initNodeHeader("header", {
     nodeCount: 200,
-    speed: 0.5,
+    speed: 0.35,
     nodeSize: 3,
     nodeColor: "255,255,255", // warna garis tetap hitam
     mouseRadius: 120,
