@@ -1,10 +1,10 @@
-Kepada {company},
+Kepada: Yth. Tim Rekrutmen {company},
 
-Saya dengan antusias mengajukan lamaran untuk posisi {position} sebagaimana diiklankan, dengan batas akhir pengajuan lamaran pada tanggal {date}. Dengan pengalaman lebih dari 13 tahun sebagai Broadcast Engineer dan programmer freelance sejak 2017, saya terbiasa memecahkan masalah kompleks, mengotomatisasi workflow, dan mengembangkan solusi software untuk operasional yang efisien.
+Saya sangat antusias untuk melamar posisi {position} sebagaimana diiklankan, dengan batas akhir pendaftaran pada {date}. Dengan pengalaman lebih dari 13 tahun sebagai Broadcast Engineer serta bekerja sebagai programmer lepas sejak tahun 2017, saya memiliki kemampuan dalam menyelesaikan permasalahan kompleks, mengotomatiskan alur kerja, serta mengembangkan solusi perangkat lunak untuk mendukung operasional yang efisien.
 
-Sebagai programmer freelance, saya telah berhasil membuat program desktop, aplikasi web, dan mobile Android. Pengalaman ini, dikombinasikan dengan proyek upgrade sistem, optimisasi jaringan, dan integrasi software di bidang broadcast, memperkuat kemampuan coding, debugging, dan adaptasi teknologi baru.
+Sebagai programmer lepas, saya telah berhasil mengembangkan aplikasi desktop, aplikasi web, dan aplikasi mobile Android. Pengalaman ini, dikombinasikan dengan keterlibatan saya dalam memimpin peningkatan sistem, optimasi jaringan, serta proyek integrasi perangkat lunak di bidang penyiaran, telah memperkuat kemampuan saya dalam pemrograman, debugging, dan beradaptasi dengan berbagai kebutuhan teknis.
 
-Saya antusias untuk membawa pengalaman teknis dan programming saya ke {company} dan berkontribusi pada pengembangan software inovatif. Saya berharap dapat berdiskusi lebih lanjut mengenai bagaimana saya bisa mendukung tim Anda.
+Saya sangat antusias untuk membawa pengalaman teknis dan kemampuan pemrograman saya ke {company} serta berkontribusi dalam pengembangan perangkat lunak yang inovatif. Sebagai bentuk inisiatif, saya telah melampirkan dokumen tambahan yang berisi ide rancangan sederhana berupa diagram alur sistem aplikasi backend untuk {company} sebagai gambaran awal. Saya berharap dapat memperoleh kesempatan untuk berdiskusi lebih lanjut mengenai bagaimana saya dapat mendukung tim Anda dalam mencapai tujuan perusahaan.
 
 Hormat saya,
 {name}
