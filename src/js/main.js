@@ -756,7 +756,7 @@ async function generateStyledPDF(data, lang = "en") {
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
-// --- HEADER ---
+  // --- HEADER ---
   pdf.setFillColor(0, 102, 204);
   pdf.rect(0, 0, pageWidth, 20, "F");
   pdf.setFont("helvetica", "bold");
@@ -776,9 +776,34 @@ async function generateStyledPDF(data, lang = "en") {
   const lineHeight = 7;
   const paragraphIndent = 7; // mm
   let y = 30;
-
+  let beforeDear = true;
   const paragraphs = filledText.split("\n\n");
   paragraphs.forEach((paragraph, idx) => {
+    const trimmed = paragraph.trim();
+    // Jika sudah ketemu Dear, paragraf berikutnya normal
+    if (trimmed.startsWith("Dear")) {
+      beforeDear = false;
+    }
+
+
+
+    // === TEKS SEBELUM "DEAR" (RATA KIRI) ===
+    if (beforeDear && !trimmed.startsWith("Dear")) {
+      const lines = pdf.splitTextToSize(
+        trimmed,
+        pageWidth - margin * 2
+      );
+
+      lines.forEach((line) => {
+        pdf.text(line, margin, y);
+        y += lineHeight;
+      });
+
+      y += lineHeight; // spasi antar paragraf
+      return; // lanjut ke paragraf berikutnya
+    }
+
+
     const words = paragraph.split(" ");
     let lineWords = [];
     let isFirstLine = true;
