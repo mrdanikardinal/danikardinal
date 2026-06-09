@@ -743,12 +743,177 @@ function fillTemplate(template, data) {
     .replace(/{date}/g, data.date)
     .replace(/{name}/g, data.name);
 }
+// for hidden date while whitout date
+const langSelect = document.getElementById("selectLang");
+const dateInput = document.getElementById("inputDate");
+
+langSelect.addEventListener("change", () => {
+  const noDate = ["en_w_d", "id_t_t"].includes(langSelect.value);
+
+  dateInput.required = !noDate;
+  dateInput.style.display = noDate ? "none" : "block";
+
+  if (noDate) {
+    dateInput.value = "";
+  }
+});
+
+
 // --- Generate PDF dengan desain ---
+// async function generateStyledPDF(data, lang = "en") {
+//   const templatePath =
+//     lang === "id" ? "coverTemplate_id.txt" : "coverTemplate_en.txt";
+//   const template = await loadTemplateLocal(templatePath);
+//   if (!template) return alert("Template gagal dimuat.");
+
+//   const filledText = fillTemplate(template, data);
+
+//   const pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+//   const pageWidth = pdf.internal.pageSize.getWidth();
+//   const pageHeight = pdf.internal.pageSize.getHeight();
+
+//   // --- HEADER ---
+//   pdf.setFillColor(0, 102, 204);
+//   pdf.rect(0, 0, pageWidth, 20, "F");
+//   pdf.setFont("helvetica", "bold");
+//   pdf.setTextColor(255, 255, 255);
+//   pdf.setFontSize(16);
+//   pdf.text(`Cover Letter - ${data.name}`, pageWidth / 2, 14, {
+//     align: "center",
+//   });
+
+
+//   // --- BODY ---
+//   pdf.setFont("times", "normal");
+//   pdf.setTextColor(0, 0, 0);
+//   pdf.setFontSize(12);
+
+//   const margin = 20;
+//   const lineHeight = 7;
+//   const paragraphIndent = 7; // mm
+//   let y = 30;
+//   let beforeDear = true;
+//   const paragraphs = filledText.split("\n\n");
+//   paragraphs.forEach((paragraph, idx) => {
+//     const trimmed = paragraph.trim();
+//     // Jika sudah ketemu Dear, paragraf berikutnya normal
+//     if (trimmed.startsWith("Dear")) {
+//       beforeDear = false;
+//     }
+
+
+
+//     // === TEKS SEBELUM "DEAR" (RATA KIRI) ===
+//     if (beforeDear && !trimmed.startsWith("Dear")) {
+//       const lines = pdf.splitTextToSize(
+//         trimmed,
+//         pageWidth - margin * 2
+//       );
+
+//       lines.forEach((line) => {
+//         pdf.text(line, margin, y);
+//         y += lineHeight;
+//       });
+
+//       y += lineHeight; // spasi antar paragraf
+//       return; // lanjut ke paragraf berikutnya
+//     }
+
+
+//     const words = paragraph.split(" ");
+//     let lineWords = [];
+//     let isFirstLine = true;
+
+//     // tandai paragraf pertama atau paragraf penutup
+//     const isNoIndent =
+//       idx === 0 ||
+//       idx === paragraphs.length - 1 ||
+//       paragraph.trim().startsWith("Sincerely");
+
+//     words.forEach((word) => {
+//       const testWidth = pdf.getTextWidth(
+//         lineWords.join(" ") + (lineWords.length ? " " : "") + word
+//       );
+//       const availableWidth =
+//         pageWidth -
+//         margin * 2 -
+//         (isFirstLine && !isNoIndent ? paragraphIndent : 0);
+
+//       if (testWidth > availableWidth) {
+//         // tulis baris penuh dengan justify
+//         writeJustifiedLine(
+//           pdf,
+//           lineWords,
+//           y,
+//           margin,
+//           pageWidth - margin,
+//           isFirstLine && !isNoIndent ? paragraphIndent : 0
+//         );
+//         y += lineHeight;
+//         lineWords = [word];
+//         isFirstLine = false;
+//       } else {
+//         lineWords.push(word);
+//       }
+//     });
+
+//     // tulis baris terakhir paragraf (rata kiri)
+//     if (lineWords.length > 0) {
+//       pdf.text(
+//         lineWords.join(" "),
+//         margin + (isFirstLine && !isNoIndent ? paragraphIndent : 0),
+//         y
+//       );
+//       y += lineHeight;
+//     }
+
+//     y += lineHeight; // spasi antar paragraf
+//     if (y > pageHeight - 30) {
+//       pdf.addPage();
+//       y = margin;
+//     }
+//   });
+
+//   // --- FOOTER ---
+//   pdf.setDrawColor(0, 0, 0);
+//   pdf.setLineWidth(0.5);
+//   pdf.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
+//   pdf.setFontSize(10);
+//   // Jika ingin selalu tanggal sekarang
+//   pdf.text(`Generated on: ${formatDate(new Date(), lang)}`, margin, pageHeight - 15);
+//   pdf.save(`${data.company}_${data.position}_CoverLetter.pdf`);
+// }
+
 async function generateStyledPDF(data, lang = "en") {
-  const templatePath =
-    lang === "id" ? "coverTemplate_id.txt" : "coverTemplate_en.txt";
+  let templatePath;
+
+  switch (lang) {
+    case "en":
+      templatePath = "coverTemplate_en.txt";
+      break;
+
+    case "id":
+      templatePath = "coverTemplate_id.txt";
+      break;
+
+    case "en_w_d":
+      templatePath = "coverTemplate_en_whitout_date.txt";
+      break;
+
+    case "id_t_t":
+      templatePath = "coverTemplate_id_tanpa_tanggal.txt";
+      break;
+
+    default:
+      templatePath = "coverTemplate_en.txt";
+  }
+
   const template = await loadTemplateLocal(templatePath);
-  if (!template) return alert("Template gagal dimuat.");
+
+  if (!template) {
+    alert("Template gagal dimuat.");
+    return;
+  }
 
   const filledText = fillTemplate(template, data);
 

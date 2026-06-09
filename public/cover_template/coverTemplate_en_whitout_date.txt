@@ -1,0 +1,15 @@
+Dani Kardinal  
++6281903400753 | danikardinal75@gmail.com  
+LinkedIn (Dani Kardinal)  
+Bogor, Indonesia  
+
+Dear Hiring Team at {company},
+
+I am excited to apply for the {position} position as advertised. With over 13 years of experience as a Broadcast Engineer and working as a freelance programmer since 2017, I am skilled at solving complex problems, automating workflows, and developing software solutions to support efficient operations.
+
+As a freelance programmer, I have successfully developed desktop applications, web applications, and Android mobile apps. This experience, combined with my involvement in leading system upgrades, network optimization, and software integration projects in the broadcast field, has strengthened my coding, debugging, and adaptability skills.
+
+I am enthusiastic about bringing my technical experience and programming skills to {company} and contributing to the development of innovative software. As a form of initiative, I have attached an additional document containing a simple design concept in the form of a backend application system flow diagram for {company} as an initial overview. I would welcome the opportunity to discuss how I can support your team in achieving its goals.
+
+Sincerely,
+{name}
