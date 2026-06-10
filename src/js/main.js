@@ -30,7 +30,7 @@ function animateSkill(bar) {
         const logoWidth = logo.getBoundingClientRect().width;
         const leftPos = Math.min(
           barWidth - logoWidth,
-          (barWidth * width) / 100
+          (barWidth * width) / 100,
         );
         logo.style.left = leftPos + "px";
       }
@@ -337,7 +337,7 @@ function createImageOverlay(sliders, overlaySelector) {
 
     const slideSel = sliders.find((s) => s.wrap === sliderID)?.class;
     slidesArray = Array.from(
-      document.querySelector(sliderID).querySelectorAll("." + slideSel)
+      document.querySelector(sliderID).querySelectorAll("." + slideSel),
     );
 
     overlayImg.src = slidesArray[currentIndex].querySelector("img").src;
@@ -382,7 +382,7 @@ function createImageOverlay(sliders, overlaySelector) {
 
   function overlayPrevImg() {
     fadeOverlayImage(
-      (currentIndex - 1 + slidesArray.length) % slidesArray.length
+      (currentIndex - 1 + slidesArray.length) % slidesArray.length,
     );
   }
 
@@ -504,7 +504,7 @@ function initNodeHeader(selector, options = {}) {
           const funnelRadius =
             config.funnelMinRadius +
             (config.funnelMaxRadius - config.funnelMinRadius) *
-            (dist / config.mouseRadius);
+              (dist / config.mouseRadius);
 
           this.x += Math.cos(angle) * funnelRadius * 0.02 + dx * ease;
           this.y += Math.sin(angle) * funnelRadius * 0.02 + dy * ease;
@@ -674,15 +674,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.querySelector(".close");
 
   // Kata kunci yang benar
-  const correctKey = "whoamiandyou";
+  // const correctKey = "whoamiandyou";
 
-  // Klik tombol Cover-Letter
+  // // Klik tombol Cover-Letter
+  // openBtn.addEventListener("click", function () {
+  //   const userKey = prompt(""); // minta kata kunci via popup
+  //   if (userKey === correctKey) {
+  //     modal.style.display = "block"; // tampilkan modal
+  //   } else {
+  //     alert(""); // alert jika salah
+  //   }
+  // });
+  const correctKey = import.meta.env.VITE_SECRET_KEY;
+console.log(import.meta.env);
   openBtn.addEventListener("click", function () {
-    const userKey = prompt(""); // minta kata kunci via popup
+    const userKey = prompt("");
+
     if (userKey === correctKey) {
-      modal.style.display = "block"; // tampilkan modal
+
+      modal.style.display = "block";
     } else {
-      alert(""); // alert jika salah
+      alert("");
+            console.log(correctKey);
     }
   });
 
@@ -758,7 +771,6 @@ langSelect.addEventListener("change", () => {
   }
 });
 
-
 // --- Generate PDF dengan desain ---
 // async function generateStyledPDF(data, lang = "en") {
 //   const templatePath =
@@ -782,7 +794,6 @@ langSelect.addEventListener("change", () => {
 //     align: "center",
 //   });
 
-
 //   // --- BODY ---
 //   pdf.setFont("times", "normal");
 //   pdf.setTextColor(0, 0, 0);
@@ -801,8 +812,6 @@ langSelect.addEventListener("change", () => {
 //       beforeDear = false;
 //     }
 
-
-
 //     // === TEKS SEBELUM "DEAR" (RATA KIRI) ===
 //     if (beforeDear && !trimmed.startsWith("Dear")) {
 //       const lines = pdf.splitTextToSize(
@@ -818,7 +827,6 @@ langSelect.addEventListener("change", () => {
 //       y += lineHeight; // spasi antar paragraf
 //       return; // lanjut ke paragraf berikutnya
 //     }
-
 
 //     const words = paragraph.split(" ");
 //     let lineWords = [];
@@ -931,7 +939,6 @@ async function generateStyledPDF(data, lang = "en") {
     align: "center",
   });
 
-
   // --- BODY ---
   pdf.setFont("times", "normal");
   pdf.setTextColor(0, 0, 0);
@@ -950,14 +957,9 @@ async function generateStyledPDF(data, lang = "en") {
       beforeDear = false;
     }
 
-
-
     // === TEKS SEBELUM "DEAR" (RATA KIRI) ===
     if (beforeDear && !trimmed.startsWith("Dear")) {
-      const lines = pdf.splitTextToSize(
-        trimmed,
-        pageWidth - margin * 2
-      );
+      const lines = pdf.splitTextToSize(trimmed, pageWidth - margin * 2);
 
       lines.forEach((line) => {
         pdf.text(line, margin, y);
@@ -967,7 +969,6 @@ async function generateStyledPDF(data, lang = "en") {
       y += lineHeight; // spasi antar paragraf
       return; // lanjut ke paragraf berikutnya
     }
-
 
     const words = paragraph.split(" ");
     let lineWords = [];
@@ -981,7 +982,7 @@ async function generateStyledPDF(data, lang = "en") {
 
     words.forEach((word) => {
       const testWidth = pdf.getTextWidth(
-        lineWords.join(" ") + (lineWords.length ? " " : "") + word
+        lineWords.join(" ") + (lineWords.length ? " " : "") + word,
       );
       const availableWidth =
         pageWidth -
@@ -996,7 +997,7 @@ async function generateStyledPDF(data, lang = "en") {
           y,
           margin,
           pageWidth - margin,
-          isFirstLine && !isNoIndent ? paragraphIndent : 0
+          isFirstLine && !isNoIndent ? paragraphIndent : 0,
         );
         y += lineHeight;
         lineWords = [word];
@@ -1011,7 +1012,7 @@ async function generateStyledPDF(data, lang = "en") {
       pdf.text(
         lineWords.join(" "),
         margin + (isFirstLine && !isNoIndent ? paragraphIndent : 0),
-        y
+        y,
       );
       y += lineHeight;
     }
@@ -1029,7 +1030,11 @@ async function generateStyledPDF(data, lang = "en") {
   pdf.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
   pdf.setFontSize(10);
   // Jika ingin selalu tanggal sekarang
-  pdf.text(`Generated on: ${formatDate(new Date(), lang)}`, margin, pageHeight - 15);
+  pdf.text(
+    `Generated on: ${formatDate(new Date(), lang)}`,
+    margin,
+    pageHeight - 15,
+  );
   pdf.save(`${data.company}_${data.position}_CoverLetter.pdf`);
 }
 // --- FUNGSI UNTUK JUSTIFY ---
@@ -1103,4 +1108,3 @@ function formatDate(dateInput = new Date(), lang = "en") {
     return `${monthsEN[monthIndex]} ${day}, ${year}`;
   }
 }
-
